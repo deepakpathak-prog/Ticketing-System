@@ -28,7 +28,7 @@ const LoginForm = () => {
           <Image src={logo} alt="Logo" width={100} height={100} className="object-contain h-48 w-40" />
         </div>
         <div className="absolute top-40 w-full flex justify-center ">
-          <Image src={reset} alt="reset" className="h-auto max-w-full rounded-lg my-8" />
+          <Image src={reset} alt="reset" className="3xl:w-[50%]" />
         </div>
 
 

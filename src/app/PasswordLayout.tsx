@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import ClientComponent from "@/Components/common/ClientComponent";
-// import PassSidebar from '../Components/Pass'
+import PassSidebar from "@/Components/common/PassSidebar";
+
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,7 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClientComponent>{children}</ClientComponent>
+        <div className="flex h-screen">
+          <PassSidebar />
+          <main className="flex-1 overflow-y-auto">{children}</main>
+        </div>
       </body>
     </html>
   );

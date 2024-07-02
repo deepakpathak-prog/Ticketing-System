@@ -6,6 +6,7 @@ import Image from 'next/image';
 import logo from "../../../public/images/logo.svg"
 import cover from "../../../public/images/cover.png"
 import Illustration from "../../../public/images/Illustration.svg"
+
 // Define the interface for form data
 interface FormData {
     username: string;
