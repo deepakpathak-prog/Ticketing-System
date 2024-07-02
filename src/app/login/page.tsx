@@ -1,11 +1,13 @@
 'use client';
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Image from 'next/image';
 import logo from "../../../public/images/logo.svg"
 import cover from "../../../public/images/cover.png"
 import Illustration from "../../../public/images/Illustration.svg"
+import toast, { Toaster } from 'react-hot-toast';
 // Define the interface for form data
 interface FormData {
     username: string;
@@ -13,14 +15,35 @@ interface FormData {
 }
 
 const LoginForm = () => {
+
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>(); // Specify the FormData type here
 
-    const onSubmit = (data: FormData) => { // Explicitly type the data parameter
-        console.log(data);
+    const onSubmit = async (data: FormData) => { // Explicitly type the data parameter
+        try {
+            const response = await axios.post('http://localhost:8000/login', {
+                email: data.username,
+                password: data.password,
+            });
+
+            if (response.status === 200) {
+                toast.success('Login successful!');
+                
+                console.log('Login successful:', response.data);
+                
+                localStorage.setItem('token', response.data.token);
+                
+                window.location.href = '/Dashboard'; 
+            }
+        } catch (error) {
+            toast.error('Error logging in. Please check your credentials.');
+            console.error('Error logging in:', error);
+            
+        }
     };
      
     return (
-
+<>
+        <Toaster /> 
         <div className="min-h-screen flex">
             <div className="relative w-1/2 h-screen">
                 <Image src={cover} alt="Background" layout="fill" objectFit="cover" className="absolute" />
@@ -154,6 +177,7 @@ const LoginForm = () => {
                 </form>
             </div>
         </div>
+</>
     );
 };
 
