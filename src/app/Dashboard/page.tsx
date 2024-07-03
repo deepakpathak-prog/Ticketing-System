@@ -1,3 +1,5 @@
+"use client"
+
 import ButtonPurple from "../../Components/common/ButtonPurple";
 import Arrow from "../../../public/images/Arrow 2.svg";
 import Image from "next/image";
@@ -6,8 +8,38 @@ import Table from "../../Components/common/Table";
 import Link from "next/link";
 import Bell from "../../../public/images/bell.svg"
 import userBg from "../../../public/images/User.svg"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Page() {
+
+  const [tickets, setTickets] = useState([]);
+
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+
+  const fetchTickets = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/viewAllTickets", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.data.tickets) {
+        throw new Error("No tickets found");
+      }
+
+      setTickets(response.data.tickets);
+    } catch (error) {
+
+      toast.error('Failed to fetch tickets');
+
+    }
+  };
+
   return (
     <div className="">
       <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
@@ -82,7 +114,7 @@ export default function Page() {
           </div>
         </div>
         <div>
-          <Table />
+          <Table tickets={tickets}/>
         </div>
       </div>
     </div>

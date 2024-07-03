@@ -1,3 +1,14 @@
+import React from 'react';
+
+// Define the type for a single ticket
+type Ticket = {
+  id: number;
+  ticket_type: string;
+  subject: string;
+  priority: string;
+  createdAt: string; // Assuming this represents the date
+  updatedAt: string; // Assuming this represents the updated date
+};
 
 // Define the type for the table data
 type TableRow = {
@@ -5,70 +16,34 @@ type TableRow = {
   "Ticket Type": string;
   Subject: string;
   Priority: string;
-  Status: string;
   Date: string;
   Updated: string;
 };
 
-const tableHead: (keyof TableRow)[] = [
-  "Ticket ID",
-  "Ticket Type",
-  "Subject",
-  "Priority",
-  "Status",
-  "Date",
-  "Updated"
-];
+type TableProps = {
+  tickets: Ticket[];
+};
 
-const tableData: TableRow[] = [
-  {
-    "Ticket ID": "1",
-    "Ticket Type": "Bug",
-    Subject: "App crash on login",
-    Priority: "High",
-    Status: "Open",
-    Date: "2023-06-01",
-    Updated: "2023-06-10"
-  },
-  {
-    "Ticket ID": "2",
-    "Ticket Type": "Feature",
-    Subject: "Add dark mode",
-    Priority: "Medium",
-    Status: "In Progress",
-    Date: "2023-06-02",
-    Updated: "2023-06-15"
-  },
-  {
-    "Ticket ID": "3",
-    "Ticket Type": "Support",
-    Subject: "Unable to reset password",
-    Priority: "Low",
-    Status: "Closed",
-    Date: "2023-06-03",
-    Updated: "2023-06-20"
-  },
-  {
-    "Ticket ID": "4",
-    "Ticket Type": "Bug",
-    Subject: "Page not loading",
-    Priority: "High",
-    Status: "Open",
-    Date: "2023-06-04",
-    Updated: "2023-06-25"
-  },
-  {
-    "Ticket ID": "5",
-    "Ticket Type": "Feature",
-    Subject: "Integrate with third-party API",
-    Priority: "Medium",
-    Status: "In Progress",
-    Date: "2023-06-05",
-    Updated: "2023-06-30"
-  }
-];
+const Table: React.FC<TableProps> = ({ tickets }) => {
+  const tableHead: (keyof TableRow)[] = [
+    "Ticket ID",
+    "Ticket Type",
+    "Subject",
+    "Priority",
+    "Date",
+    "Updated"
+  ];
 
-const Table: React.FC = () => {
+  // Map fetched tickets data to TableRow format
+  const tableData: TableRow[] = tickets.map((ticket) => ({
+    "Ticket ID": ticket.id.toString(),
+    "Ticket Type": ticket.ticket_type,
+    Subject: ticket.subject,
+    Priority: ticket.priority,
+    Date: new Date(ticket.createdAt).toLocaleDateString(),
+    Updated: new Date(ticket.updatedAt).toLocaleDateString()
+  }));
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

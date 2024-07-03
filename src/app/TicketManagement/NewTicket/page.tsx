@@ -8,6 +8,9 @@ import breadcrumbArrow from "../../../../public/images/BreadcrumbArrow.svg";
 import DropdownArrow from "../../../../public/images/dropdown-arrow_svgrepo.com.svg";
 import Link from "next/link";
 import { Button } from "@headlessui/react";
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function Page() {
   const [ticketType, setTicketType] = useState("Select Ticket Type");
@@ -104,24 +107,35 @@ export default function Page() {
     return valid;
   };
 
-  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log("Submitting form with data:", {
-        ticketType,
-        priority,
-        subject,
-        requestDetails,
-        selectedFiles,
-      });
+      const formData = new FormData();
+      formData.append('ticket_type', ticketType);
+      formData.append('priority', priority);
+      formData.append('subject', subject);
+      formData.append('details', requestDetails);
+      selectedFiles.forEach(file => formData.append('files', file));
 
-      // Reset form fields on cancel
-      handleCancel();
+      try {
+        const response = await axios.post('http://localhost:8000/addNewTicket', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust as needed
+          },
+        });
+        toast.success('New Ticket Added Successfully');
+
+        handleCancel();
+      } catch (error) {
+        console.error('Error adding new ticket:', error);
+      } 
     }
   };
 
   return (
     <div className="">
+      <Toaster /> 
       <div className="flex items-center justify-between shadow-md p-8 sticky top-0 z-50 bg-white">
         <div className="flex items-center gap-3">
           <div className="text-[#2A2C3E] text-xl">
