@@ -1,23 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import ProfilePic from "../../../public/images/Group 206.svg";
+import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
 import Image from 'next/image';
+import ProfilePic from "../../../public/images/Group 206.svg";
+import Close from "../../../public/images/closebutton.svg"
 
-type Post = {
-  id: number;
-  title: string;
-  date: string;
-  commentCount: number;
-  shareCount: number;
-};
-
-type Category = {
-  name: string;
-  posts: Post[];
-};
-
+// Define types for form inputs
 type FormInputs = {
   email: string;
   companyName: string;
@@ -36,22 +25,68 @@ type SecurityInputs = {
   newPassword: string;
 };
 
-const categories: Category[] = [
-  {
-    name: "Edit Profile",
-    posts: [],
-  },
-  {
-    name: "Member management",
-    posts: [],
-  },
-  {
-    name: "Security",
-    posts: [],
-  },
-];
+// Define props for WorkDomainInput component
+type WorkDomainInputProps = {
+  register: UseFormRegister<FormInputs>;
+  errors: FieldErrors<FormInputs>;
+};
 
-export default function Example() {
+const WorkDomainInput: React.FC<WorkDomainInputProps> = ({ register, errors }) => {
+  const [workDomains, setWorkDomains] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && inputValue.trim()) {
+      e.preventDefault();
+      setWorkDomains([...workDomains, inputValue.trim()]);
+      setInputValue("");
+    }
+  };
+
+  const handleRemove = (index: number) => {
+    setWorkDomains(workDomains.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="w-full px-2">
+      <label htmlFor="workDomain" className="block mt-6">
+        Work Domain
+      </label>
+      <div className="border-2 border-[#DFEAF2] rounded-md p-2 mt-2 bg-white h-40 cursor-pointer">
+        {workDomains.map((domain, index) => (
+          <span
+            key={index}
+            className="inline-block bg-[#E8E3FA] rounded-full pl-5 pr-7 py-3 text-sm  text-black mr-2 mb-2 "
+          >
+            {domain}
+            <button
+              onClick={() => handleRemove(index)}
+              className="ml-5 text-black"
+            >
+              <Image src={Close} alt="hhh" width={10} />
+            </button>
+          </span>
+        ))}
+        <input
+          id="workDomain"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="input-field p-2 mt-2 w-full border-none focus:outline-none"
+        />
+      </div>
+      <input
+        type="hidden"
+        {...register("workDomain", { required: true })}
+        value={workDomains.join(",")}
+      />
+      
+    </div>
+  );
+};
+
+const Example: React.FC = () => {
   const {
     register,
     handleSubmit,
@@ -71,6 +106,21 @@ export default function Example() {
   const onSubmitSecurity: SubmitHandler<SecurityInputs> = (data) => {
     console.log(data); // Replace with your logic to handle security form submission
   };
+
+  const categories = [
+    {
+      name: "Edit Profile",
+      posts: [],
+    },
+    {
+      name: "Member management",
+      posts: [],
+    },
+    {
+      name: "Security",
+      posts: [],
+    },
+  ];
 
   return (
     <div className="w-full p-2">
@@ -92,7 +142,7 @@ export default function Example() {
                 {name === "Edit Profile" && (
                   <div className="flex">
                     <div className="py-7 pr-10">
-                      <Image src={ProfilePic} alt="hhh" width={400} />
+                      <Image src={ProfilePic} alt="Profile Pic" width={400} />
                     </div>
                     <div>
                       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">
@@ -233,7 +283,7 @@ export default function Example() {
                           <textarea
                             id="aboutCompany"
                             {...register("aboutCompany", { required: true })}
-                            className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                            className="input-field p-2 mt-2 w-full h-40 border-2 border-[#DFEAF2] rounded-md focus:outline-none"
                           />
                           {errors.aboutCompany && (
                             <span role="alert" className="text-red-600">
@@ -241,247 +291,71 @@ export default function Example() {
                             </span>
                           )}
                         </div>
-                        <div className="w-full px-2">
-                          <label htmlFor="workDomain" className="block mt-6">
-                            Work Domain
-                          </label>
-                          <textarea
-                            id="workDomain"
-                            {...register("workDomain", { required: true })}
-                            className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                          />
-                          {errors.workDomain && (
-                            <span role="alert" className="text-red-600">
-                              Work Domain is required
-                            </span>
-                          )}
+                        <WorkDomainInput register={register} errors={errors} />
+                        <div className="flex justify-end w-full mt-6">
+                          <button
+                            type="submit"
+                            className="btn-submit ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
+                          >
+                            Save details
+                          </button>
                         </div>
-                        {/* <button type="submit" className="btn-submit">
-                          Submit
-                        </button> */}
                       </form>
                     </div>
                   </div>
                 )}
-
-                {name === "Security" && (
-                  <form onSubmit={handleSubmitSecurity(onSubmitSecurity)} className="space-y-4 p-5 w-1/2 bg-white">
-                    <h1 className="p-2 text-2xl font-medium text-[#333B69]">Change Password</h1>
-                    <div className="w-full px-2">
-                      <label htmlFor="currentPassword" className="block mt-6">
-                        Current Password
-                      </label>
-                      <input
-                        id="currentPassword"
-                        type="password"
-                        {...registerSecurity("currentPassword", { required: true })}
-                        className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                      />
-                      {securityErrors.currentPassword && (
-                        <span role="alert" className="text-red-600">
-                          Current Password is required
-                        </span>
-                      )}
-                    </div>
-                    <div className="w-full px-2">
-                      <label htmlFor="newPassword" className="block mt-6">
-                        New Password
-                      </label>
-                      <input
-                        id="newPassword"
-                        type="password"
-                        {...registerSecurity("newPassword", { required: true })}
-                        className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                      />
-                      {securityErrors.newPassword && (
-                        <span role="alert" className="text-red-600">
-                          New Password is required
-                        </span>
-                      )}
-                    </div>
-                    <div className="w-full px-2">
-                      <button type="submit" className="py-2 px-4 bg-[#5027D9] text-white rounded">
-                        Change Password
-                      </button>
-                    </div>
-                  </form>
-                )}
-
                 {name === "Member management" && (
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
-                        
-                        <tr>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Member ID
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Profile Image
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Member name
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Organisation name
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Email ID
-                          </th>
-                          <th
-                            scope="col"
-                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          >
-                            Action
-                          </th>
-                          <th
-                            scope="col"
-                            className="relative  py-3"
-                          >
-                            <span className="sr-only">Edit</span>
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            #1234
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            Type 1
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm ">
-                            This is a ticket
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                           Low
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            #1234
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            Type 1
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm ">
-                            This is a ticket
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                           Low
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            #1234
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            Type 1
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm ">
-                            This is a ticket
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                           Low
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            #1234
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            Type 1
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm ">
-                            This is a ticket
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                           Low
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                            <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                              Edit
-                            </a>
-                          </td>
-                        </tr>
-                        
-                        
-                      </tbody>
-                    </table>
+                  <div>
+                    <p>Member management content goes here.</p>
                   </div>
                 )}
-
-                {name !== "Edit Profile" && name !== "Security" && name !== "Member management" && (
-                  <ul>
-                    {categories
-                      .find((category) => category.name === name)
-                      ?.posts.map((post) => (
-                        <li
-                          key={post.id}
-                          className="relative rounded-md p-3 text-sm/6 transition hover:bg-white/5"
+                {name === "Security" && (
+                  <div>
+                    <form onSubmit={handleSubmitSecurity(onSubmitSecurity)} className="space-y-4 p-2">
+                      <div className="flex flex-wrap -mx-2">
+                        <div className="w-full px-2">
+                          <label htmlFor="currentPassword" className="block mt-6">
+                            Current Password
+                          </label>
+                          <input
+                            id="currentPassword"
+                            type="password"
+                            {...registerSecurity("currentPassword", { required: true })}
+                            className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                          />
+                          {securityErrors.currentPassword && (
+                            <span role="alert" className="text-red-600">
+                              Current Password is required
+                            </span>
+                          )}
+                        </div>
+                        <div className="w-full px-2">
+                          <label htmlFor="newPassword" className="block mt-6">
+                            New Password
+                          </label>
+                          <input
+                            id="newPassword"
+                            type="password"
+                            {...registerSecurity("newPassword", { required: true })}
+                            className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                          />
+                          {securityErrors.newPassword && (
+                            <span role="alert" className="text-red-600">
+                              New Password is required
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex justify-end w-full mt-6">
+                        <button
+                          type="submit"
+                          className="btn-submit ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
                         >
-                          <a href="#" className="font-semibold text-black">
-                            <span className="absolute inset-0" />
-                            {post.title}
-                          </a>
-                          <ul
-                            className="flex gap-2 text-white/50"
-                            aria-hidden="true"
-                          >
-                            <li>{post.date}</li>
-                            <li aria-hidden="true">&middot;</li>
-                            <li>{post.commentCount} comments</li>
-                            <li aria-hidden="true">&middot;</li>
-                            <li>{post.shareCount} shares</li>
-                          </ul>
-                        </li>
-                      ))}
-                  </ul>
+                          Save changes
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 )}
               </TabPanel>
             ))}
@@ -490,4 +364,6 @@ export default function Example() {
       </div>
     </div>
   );
-}
+};
+
+export default Example;
