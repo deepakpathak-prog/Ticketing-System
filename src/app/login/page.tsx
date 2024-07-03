@@ -32,7 +32,7 @@ const LoginForm = () => {
                 
                 localStorage.setItem('token', response.data.token);
                 
-                window.location.href = '/Dashboard'; 
+                window.location.href = '/AccountDetails'; 
             }
         } catch (error) {
             toast.error('Error logging in. Please check your credentials.');
