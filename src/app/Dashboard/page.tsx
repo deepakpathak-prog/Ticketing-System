@@ -73,7 +73,7 @@ export default function Page() {
         <div className="flex p-7 justify-between">
           <div className="text-3xl text-[#2A2C3E]">Recent Tickets</div>
           <div className="text-2xl text-[#696969] flex gap-3 justify-center items-center">
-            <div><Link href="#">View All Tickets </Link></div>
+            <div><Link href="/AllTickets">View All Tickets </Link></div>
             <div>
               <Link href="#">
                 <Image src={Arrow} alt="hhh" width={28} />
