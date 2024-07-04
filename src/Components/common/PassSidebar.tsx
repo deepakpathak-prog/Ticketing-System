@@ -52,8 +52,8 @@ const PassSidebar = () => {
                             <Link href="/FirstPassword">Reset Password</Link>
                         
                         </div>
-                        <div className='flex gap-3 text-white pt-3 pb-3 pl-3 w-[90%] rounded-md hover:bg-[#5027D9]'>
-                            <Image src={Ellipse} alt="change password"/>
+                        <div className='flex gap-3 text-white pt-3 pb-3 pl-4 w-[90%] rounded-md hover:bg-[#5027D9]'>
+                            <Image src={circle} alt="change password"/>
                             <Link href="/AccountDetails">Enter Account details</Link>
                         </div>
                     </>
