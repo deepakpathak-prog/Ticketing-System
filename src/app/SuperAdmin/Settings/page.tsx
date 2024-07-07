@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels, Button } from "@headlessui/react";
+import {
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Button,
+} from "@headlessui/react";
 import breadcrumbArrow from "../../../../public/images/BreadcrumbArrow.svg";
 import Bell from "../../../../public/images/bell.svg";
 import userBg from "../../../../public/images/User.svg";
@@ -15,7 +22,9 @@ import ProfilePic from "../../../../public/images/Group 206.svg";
 
 const tabClasses = ({ selected }: { selected: boolean }) =>
   `px-7 text-left w-fit pb-4 text-sm font-medium focus:outline-none border-b-2 ${
-    selected ? "text-[#5027D9] font-medium border-b-2 border-[#5027D9]" : "text-gray-500"
+    selected
+      ? "text-[#5027D9] font-medium border-b-2 border-[#5027D9]"
+      : "text-gray-500"
   }`;
 
 interface Customer {
@@ -48,7 +57,9 @@ const customers: Customer[] = [
 
 export default function Settings() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
+    null
+  );
   const [innerTabIndex, setInnerTabIndex] = useState(0);
   const [showAddMemberForm, setShowAddMemberForm] = useState(false);
 
@@ -91,7 +102,13 @@ export default function Settings() {
       <div className="px-3 py-10">
         <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
           <TabList className="flex space-x-1 bg-white w-fit text-left p-3 px-7 cursor-pointer pb-0">
-            {["Customer Management", "Organisation Management", "Status Management", "Priority Management", "Profile Settings"].map((tab, index) => (
+            {[
+              "Customer Management",
+              "Organisation Management",
+              "Status Management",
+              "Priority Management",
+              "Profile Settings",
+            ].map((tab, index) => (
               <Tab as="div" key={index} className={tabClasses}>
                 {tab}
               </Tab>
@@ -103,7 +120,9 @@ export default function Settings() {
                 <div>
                   <div className="py-7 flex justify-between border-b-2">
                     <div>
-                      <h2 className="text-2xl font-semibold">{selectedCustomer.name} PVT LTD</h2>
+                      <h2 className="text-2xl font-semibold">
+                        {selectedCustomer.name} PVT LTD
+                      </h2>
                     </div>
                     {innerTabIndex === 0 ? (
                       <div className="flex gap-5">
@@ -113,7 +132,10 @@ export default function Settings() {
                         >
                           Remove Client
                         </Button>
-                        <Button type="submit" className="rounded bg-[#5027D9] py-3 px-16 text-sm text-white">
+                        <Button
+                          type="submit"
+                          className="rounded bg-[#5027D9] py-3 px-16 text-sm text-white"
+                        >
                           Save
                         </Button>
                       </div>
@@ -126,7 +148,10 @@ export default function Settings() {
                         >
                           Cancel
                         </Button>
-                        <Button type="submit" className="rounded bg-[#5027D9] py-3 px-7 text-sm text-white">
+                        <Button
+                          type="submit"
+                          className="rounded bg-[#5027D9] py-3 px-7 text-sm text-white"
+                        >
                           Save Member
                         </Button>
                       </div>
@@ -146,13 +171,28 @@ export default function Settings() {
 
                   <div className="flex mt-7 mb-10">
                     <div className="w-[15%] pr-4 pl-2 border-r-2">
-                      <TabGroup selectedIndex={innerTabIndex} onChange={setInnerTabIndex}>
+                      <TabGroup
+                        selectedIndex={innerTabIndex}
+                        onChange={setInnerTabIndex}
+                      >
                         <TabList className="space-y-4 ">
-                          {["Edit Profile", "Team Members"].map((innerTab, index) => (
-                            <Tab as="div" key={index} className={({ selected }) => `text-left cursor-pointer ${selected ? "text-white bg-[#5027D9] p-3" : "text-[#91919B] p-3"}`}>
-                              {innerTab}
-                            </Tab>
-                          ))}
+                          {["Edit Profile", "Team Members"].map(
+                            (innerTab, index) => (
+                              <Tab
+                                as="div"
+                                key={index}
+                                className={({ selected }) =>
+                                  `text-left cursor-pointer ${
+                                    selected
+                                      ? "text-white bg-[#5027D9] p-3"
+                                      : "text-[#91919B] p-3"
+                                  }`
+                                }
+                              >
+                                {innerTab}
+                              </Tab>
+                            )
+                          )}
                         </TabList>
                       </TabGroup>
                     </div>
@@ -164,143 +204,191 @@ export default function Settings() {
                         </div>
                       ) : showAddMemberForm ? (
                         <div>
-                          <h2 className="text-xl font-semibold mb-4">Basic Details</h2>
+                          <h2 className="text-xl font-semibold mb-4">
+                            Basic Details
+                          </h2>
                           <div className="flex py-5">
-        <div className="w-[20%] pt-10">
-          <Image src={ProfilePic} alt="Profile Pic" className="pr-3"  />
-        </div>
-        <div className="grid grid-cols-2 gap-4 w-full">
-          <div>
-            <label htmlFor="customerName" className="block text-sm ">
-              Customer Name
-            </label>
-            <input
-              id="customerName"
-              type="text"
-              // {...register("customerName", { required: true })}
-              className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
-            {/* {errors.customerName && (
+                            <div className="w-[20%] pt-10">
+                              <Image
+                                src={ProfilePic}
+                                alt="Profile Pic"
+                                className="pr-3"
+                              />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4 w-full">
+                              <div>
+                                <label
+                                  htmlFor="customerName"
+                                  className="block text-sm "
+                                >
+                                  Customer Name
+                                </label>
+                                <input
+                                  id="customerName"
+                                  type="text"
+                                  // {...register("customerName", { required: true })}
+                                  className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                                />
+                                {/* {errors.customerName && (
               <span role="alert" className="text-red-600">
                 Customer Name is required
               </span>
             )} */}
-          </div>
-          <div>
-            <label htmlFor="companyName" className="block text-sm  ">
-              Gender
-            </label>
-            <input
-              id="companyName"
-              type="text"
-              // {...register("companyName", { required: true })}
-              className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
-            {/* {errors.companyName && (
+                              </div>
+                              <div>
+                                <label
+                                  htmlFor="companyName"
+                                  className="block text-sm  "
+                                >
+                                  Gender
+                                </label>
+                                <input
+                                  id="companyName"
+                                  type="text"
+                                  // {...register("companyName", { required: true })}
+                                  className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                                />
+                                {/* {errors.companyName && (
               <span role="alert" className="text-red-600">
                 Company Name is required
               </span>
             )} */}
-          </div>
-<div>
-<label htmlFor="companyUrl" className="block text-sm ">
-              Phone number
-            </label>
-            <input
-              id="companyUrl"
-              type="url"
-              // {...register("companyUrl", { required: true })}
-              className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
-            {/* {errors.companyUrl && (
+                              </div>
+                              <div>
+                                <label
+                                  htmlFor="companyUrl"
+                                  className="block text-sm "
+                                >
+                                  Phone number
+                                </label>
+                                <input
+                                  id="companyUrl"
+                                  type="url"
+                                  // {...register("companyUrl", { required: true })}
+                                  className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                                />
+                                {/* {errors.companyUrl && (
               <span role="alert" className="text-red-600">
                 Company URL is required
               </span>
             )} */}
-</div>
-<div>
-<label htmlFor="companyUrl" className="block text-sm ">
-              Email
-            </label>
-            <input
-              id="companyUrl"
-              type="url"
-              // {...register("companyUrl", { required: true })}
-              className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
-            {/* {errors.companyUrl && (
+                              </div>
+                              <div>
+                                <label
+                                  htmlFor="companyUrl"
+                                  className="block text-sm "
+                                >
+                                  Email
+                                </label>
+                                <input
+                                  id="companyUrl"
+                                  type="url"
+                                  // {...register("companyUrl", { required: true })}
+                                  className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                                />
+                                {/* {errors.companyUrl && (
               <span role="alert" className="text-red-600">
                 Company URL is required
               </span>
             )} */}
-</div>
-<div>
-<label htmlFor="companyUrl" className="block text-sm ">
-              Customer Company
-            </label>
-            <input
-              id="companyUrl"
-              type="url"
-              // {...register("companyUrl", { required: true })}
-              className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
-            {/* {errors.companyUrl && (
+                              </div>
+                              <div>
+                                <label
+                                  htmlFor="companyUrl"
+                                  className="block text-sm "
+                                >
+                                  Customer Company
+                                </label>
+                                <input
+                                  id="companyUrl"
+                                  type="url"
+                                  // {...register("companyUrl", { required: true })}
+                                  className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                                />
+                                {/* {errors.companyUrl && (
               <span role="alert" className="text-red-600">
                 Company URL is required
               </span>
             )} */}
-</div>
-<div>
-<label htmlFor="companyUrl" className="block text-sm ">
-              Designation
-            </label>
-            <input
-              id="companyUrl"
-              type="url"
-              // {...register("companyUrl", { required: true })}
-              className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
-            {/* {errors.companyUrl && (
+                              </div>
+                              <div>
+                                <label
+                                  htmlFor="companyUrl"
+                                  className="block text-sm "
+                                >
+                                  Designation
+                                </label>
+                                <input
+                                  id="companyUrl"
+                                  type="url"
+                                  // {...register("companyUrl", { required: true })}
+                                  className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                                />
+                                {/* {errors.companyUrl && (
               <span role="alert" className="text-red-600">
                 Company URL is required
               </span>
             )} */}
-</div>
-            
-
-        </div>
-      </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       ) : (
                         <div>
                           <table className="min-w-full divide-y divide-gray-200 border-b-0">
                             <thead className="bg-white">
                               <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Customer ID</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Customer Name</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Company URL</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Area of Work</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Phone</th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Email</th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                                  Customer ID
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                                  Customer Name
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                                  Company URL
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                                  Area of Work
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                                  Phone
+                                </th>
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                                  Email
+                                </th>
                                 <th className=""></th>
                                 <th className=""></th>
                               </tr>
                             </thead>
                             <tbody className="bg-white">
                               {customers.map((customer) => (
-                                <tr key={customer.id} className="cursor-pointer" onClick={() => handleCustomerClick(customer)}>
+                                <tr
+                                  key={customer.id}
+                                  className="cursor-pointer"
+                                  onClick={() => handleCustomerClick(customer)}
+                                >
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5027D9]">
-                                    <p className="border-b-2 w-fit border-[#5027D9]">#{customer.id}</p>
+                                    <p className="border-b-2 w-fit border-[#5027D9]">
+                                      #{customer.id}
+                                    </p>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5027D9]">
-                                    <p className="border-b-2 w-fit border-[#5027D9]">{customer.name}</p>
+                                    <p className="border-b-2 w-fit border-[#5027D9]">
+                                      {customer.name}
+                                    </p>
                                   </td>
-                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.url}</td>
-                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.area}</td>
-                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.phone}</td>
-                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.email}</td>
-                                  
-                                  
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {customer.url}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {customer.area}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {customer.phone}
+                                  </td>
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {customer.email}
+                                  </td>
                                 </tr>
                               ))}
                             </tbody>
@@ -313,7 +401,9 @@ export default function Settings() {
               ) : (
                 <div>
                   <div className="flex justify-between items-center py-7">
-                    <h2 className="text-2xl font-semibold">Customer Management</h2>
+                    <h2 className="text-2xl font-semibold">
+                      Customer Management
+                    </h2>
                     <div className="flex gap-5">
                       <SearchBar />
                       <div className="flex gap-5">
@@ -322,7 +412,12 @@ export default function Settings() {
                             type="button"
                             className="rounded bg-[#5027D9] py-2 px-4 text-sm text-white items-center gap-2 -ml-5"
                           >
-                            <Image src={Plus} alt="add" width={22} height={22} />
+                            <Image
+                              src={Plus}
+                              alt="add"
+                              width={22}
+                              height={22}
+                            />
                             Add customer
                           </Button>
                         </div>
@@ -334,29 +429,57 @@ export default function Settings() {
                     <table className="min-w-full divide-y divide-gray-200 border-b-0">
                       <thead className="bg-white">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Customer ID</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Customer Name</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Company URL</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Area of Work</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Phone</th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">Email</th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                            Customer ID
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                            Customer Name
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                            Company URL
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                            Area of Work
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                            Phone
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500">
+                            Email
+                          </th>
                           <th className=""></th>
                           <th className=""></th>
                         </tr>
                       </thead>
                       <tbody className="bg-white">
                         {customers.map((customer) => (
-                          <tr key={customer.id} className="cursor-pointer" onClick={() => handleCustomerClick(customer)}>
+                          <tr
+                            key={customer.id}
+                            className="cursor-pointer"
+                            onClick={() => handleCustomerClick(customer)}
+                          >
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5027D9]">
-                              <p className="border-b-2 w-fit border-[#5027D9]">#{customer.id}</p>
+                              <p className="border-b-2 w-fit border-[#5027D9]">
+                                #{customer.id}
+                              </p>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-[#5027D9]">
-                              <p className="border-b-2 w-fit border-[#5027D9]">{customer.name}</p>
+                              <p className="border-b-2 w-fit border-[#5027D9]">
+                                {customer.name}
+                              </p>
                             </td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.url}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.area}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.phone}</td>
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.email}</td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {customer.url}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {customer.area}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {customer.phone}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {customer.email}
+                            </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                               <button>
                                 <Image src={View} alt="view" width={20} />
@@ -376,19 +499,27 @@ export default function Settings() {
               )}
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              <h2 className="text-2xl font-semibold">Organisation Management Content</h2>
+              <h2 className="text-2xl font-semibold">
+                Organisation Management Content
+              </h2>
               <p>Details about Organisation Management...</p>
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              <h2 className="text-2xl font-semibold">Status Management Content</h2>
+              <h2 className="text-2xl font-semibold">
+                Status Management Content
+              </h2>
               <p>Details about Status Management...</p>
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              <h2 className="text-2xl font-semibold">Priority Management Content</h2>
+              <h2 className="text-2xl font-semibold">
+                Priority Management Content
+              </h2>
               <p>Details about Priority Management...</p>
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              <h2 className="text-2xl font-semibold">Profile Settings Content</h2>
+              <h2 className="text-2xl font-semibold">
+                Profile Settings Content
+              </h2>
               <p>Details about Profile Settings...</p>
             </TabPanel>
           </TabPanels>

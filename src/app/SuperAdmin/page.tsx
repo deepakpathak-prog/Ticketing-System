@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+
 import Image from "next/image";
 import Bell from "../../../public/images/bell.svg";
 import userBg from "../../../public/images/User.svg";
@@ -6,6 +7,11 @@ import Arrow from "../../../public/images/Arrow 2.svg";
 import Circle from "../../../public/images/Icon_Order.svg";
 import Link from "next/link";
 import Table from "../../Components/common/Table"
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import toast, { Toaster } from 'react-hot-toast';
+
+
 
 // Define an interface for the table data
 interface TicketData {
@@ -23,6 +29,33 @@ const ticketData: TicketData[] = [
 ];
 
 export default function SuperAdminDashboard() {
+
+  const [tickets, setTickets] = useState([]);
+
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+
+  const fetchTickets = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/viewAllTickets", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      if (!response.data.tickets) {
+        throw new Error("No tickets found");
+      }
+
+      setTickets(response.data.tickets);
+    } catch (error) {
+
+      toast.error('Failed to fetch tickets');
+
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
@@ -207,7 +240,7 @@ export default function SuperAdminDashboard() {
           </div>
         </div>
         <div>
-          <Table />
+          <Table tickets={tickets}/>
         </div>
       </div>
     </div>

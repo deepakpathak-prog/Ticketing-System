@@ -174,7 +174,8 @@ export default function Page() {
                   id="ticketType"
                   name="ticketType"
                   value={ticketType}
-                  onChange={handlePriorityChange}
+                  
+                  onChange={handleTicketTypeChange}
                   className={`mt-1 text-[#5E626C] w-full p-2 px-3 bg-white rounded-md appearance-none focus:outline-none ${
                     errors.priority ? "border-red-500" : "border-gray-300"
                   }`}
@@ -204,7 +205,7 @@ export default function Page() {
                   id="priority"
                   name="priority"
                   value={priority}
-                  onChange={handleTicketTypeChange}
+                  onChange={handlePriorityChange}
                   className={`mt-1 text-[#5E626C] w-full p-2 px-3 bg-white rounded-md appearance-none focus:outline-none ${
                     errors.priority ? "border-red-500" : "border-gray-300"
                   }`}

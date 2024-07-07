@@ -266,14 +266,14 @@ const CustomerForm: React.FC = () => {
         <div className="col-span-2">
         <WorkDomainInput register={register} errors={errors} />
         </div>
-        {/* <div className="flex justify-end w-full mt-6 col-span-2">
+        <div className="flex justify-end w-full mt-6 col-span-2">
           <button
             type="submit"
             className="btn-submit ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
           >
             Save details
           </button>
-        </div> */}
+        </div>
       </form>
     </div>
   );

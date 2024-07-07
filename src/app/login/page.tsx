@@ -50,28 +50,27 @@ const LoginForm = () => {
     <>
       <Toaster />
       <div className=" h-screen grid grid-cols-2">
-        <div className=" relative h-full flex flex-col justify-between items-center">
+        <div className=" relative h-screen flex flex-col items-center">
           <Image
             src={cover}
             alt="Background"
             layout="fill"
             className="absolute z-[-1]"
           />
-          <div className="flex justify-center items-center mt-28">
+          <div className="flex justify-center items-center mt-28 mb-28">
             <Image src={logoWhite} alt="Logo" height={50} />
           </div>
           <div className="">
-            <Image src={Illustration} alt="Illustration" height={400} />
+            <Image src={Illustration} alt="Illustration" height={300} />
           </div>
 
-          <div className="flex justify-center ">
+          <div className="flex justify-center mt-14">
             <h1 className="text-white text-3xl font-bold ">
               Ticket Management System
             </h1>
           </div>
-          <div className="flex justify-center  text-white mb-56">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididun.
+          <div className="flex justify-center  text-white mt-14">
+          Streamline your ticketing process: Efficient, intuitive, and reliable ticket management for seamless service.
           </div>
         </div>
 
@@ -113,7 +112,7 @@ const LoginForm = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="password"
                 >
-                  Password<span className="text-red-500">*</span>
+                  Password <span className="text-red-500">*</span>
                 </label>
                 <input
                   {...register('password', {
