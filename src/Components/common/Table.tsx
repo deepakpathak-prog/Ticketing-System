@@ -1,3 +1,15 @@
+import React from 'react';
+
+// Define the type for a single ticket
+type Ticket = {
+  id: number;
+  ticket_type: string;
+  subject: string;
+  priority: string;
+  createdAt: string; // Assuming this represents the date
+  updatedAt: string; // Assuming this represents the updated date
+  status: string; // Added status field
+};
 
 // Define the type for the table data
 type TableRow = {
@@ -5,74 +17,55 @@ type TableRow = {
   "Ticket Type": string;
   Subject: string;
   Priority: string;
-  Status: string;
   Date: string;
   Updated: string;
+  Status: string; // Added status field
 };
 
-const tableHead: (keyof TableRow)[] = [
-  "Ticket ID",
-  "Ticket Type",
-  "Subject",
-  "Priority",
-  "Status",
-  "Date",
-  "Updated"
-];
+type TableProps = {
+  tickets: Ticket[];
+};
 
-const tableData: TableRow[] = [
-  {
-    "Ticket ID": "1",
-    "Ticket Type": "Bug",
-    Subject: "App crash on login",
-    Priority: "High",
-    Status: "Open",
-    Date: "2023-06-01",
-    Updated: "2023-06-10"
-  },
-  {
-    "Ticket ID": "2",
-    "Ticket Type": "Feature",
-    Subject: "Add dark mode",
-    Priority: "Medium",
-    Status: "In Progress",
-    Date: "2023-06-02",
-    Updated: "2023-06-15"
-  },
-  {
-    "Ticket ID": "3",
-    "Ticket Type": "Support",
-    Subject: "Unable to reset password",
-    Priority: "Low",
-    Status: "Closed",
-    Date: "2023-06-03",
-    Updated: "2023-06-20"
-  },
-  {
-    "Ticket ID": "4",
-    "Ticket Type": "Bug",
-    Subject: "Page not loading",
-    Priority: "High",
-    Status: "Open",
-    Date: "2023-06-04",
-    Updated: "2023-06-25"
-  },
-  {
-    "Ticket ID": "5",
-    "Ticket Type": "Feature",
-    Subject: "Integrate with third-party API",
-    Priority: "Medium",
-    Status: "In Progress",
-    Date: "2023-06-05",
-    Updated: "2023-06-30"
-  }
-];
+const Table: React.FC<TableProps> = ({ tickets }) => {
+  const tableHead: (keyof TableRow)[] = [
+    "Ticket ID",
+    "Ticket Type",
+    "Subject",
+    "Priority",
+    "Status",
+    "Date",
+    "Updated",
+  ];
 
-const Table: React.FC = () => {
+  // Map fetched tickets data to TableRow format
+  const tableData: TableRow[] = tickets.map((ticket) => ({
+    "Ticket ID": ticket.id.toString(),
+    "Ticket Type": ticket.ticket_type,
+    Subject: ticket.subject,
+    Priority: ticket.priority,
+    Date: new Date(ticket.createdAt).toLocaleDateString(),
+    Updated: new Date(ticket.updatedAt).toLocaleDateString(),
+    Status: ticket.status,
+  }));
+
+  // Function to determine priority text color
+  const getPriorityColor = (priority: string): string => {
+    switch (priority.toLowerCase()) {
+      case 'high':
+        return 'text-red-600';
+      case 'medium':
+        return 'text-blue-600';
+      case 'low':
+        return 'text-purple-600';
+      default:
+        return '';
+    }
+  };
+
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-[#FFFFFF] dark:text-gray-400">
           <tr>
             {tableHead.map((heading) => (
               <th key={heading} scope="col" className="px-6 py-3">
@@ -83,9 +76,9 @@ const Table: React.FC = () => {
         </thead>
         <tbody>
           {tableData.map((row, index) => (
-            <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+            <tr key={index} className={`odd:bg-white odd:dark:bg-[#FFFFFF] even:bg-[#FBFBFB] dark:border-gray-700`}>
               {tableHead.map((heading) => (
-                <td key={heading} className="px-6 py-4">
+                <td key={heading} className={`px-6 py-4 ${heading === "Ticket ID" || heading === "Ticket Type" ? 'text-blue-500' : (heading === "Subject" ? 'text-black' : (heading === "Status" && row[heading] === "Active" ? 'text-red-600 ' : (heading === "Status" && row[heading] === "Closed" ? 'text-green-500' : getPriorityColor(row["Priority"]))))}`}>
                   {row[heading]}
                 </td>
               ))}
