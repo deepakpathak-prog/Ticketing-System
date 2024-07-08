@@ -40,7 +40,7 @@ const LoginForm = () => {
       {/* Right Side: Form */}
       <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8">
         <form className="max-w-md w-full">
-          <h2 className="text-2xl mb-8 text-center font-bold text-2xl">Reset Password</h2>
+          <h2 className="text-2xl mb-8 text-center font-bold ">Reset Password</h2>
           <div className="mb-4">
             <label htmlFor="username" className="block text-gray-700 text-sm font-
 Plus Jakarta Sans mb-2 ">New password*</label>

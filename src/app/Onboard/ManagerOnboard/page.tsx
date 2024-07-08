@@ -4,11 +4,11 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Head from 'next/head';
 import Image from 'next/image';
-import logo from "../../../public/images/logo.svg"
-import cover from "../../../public/images/cover.png"
-import Illustration from "../../../public/images/Illustration.svg"
+import logo from "../../../../public/images/logo.svg"
+import cover from "../../../../public/images/cover.png"
+import Illustration from "../../../../public/images/Illustration.svg"
 import toast, { Toaster } from 'react-hot-toast'
-import btn from "../../../public/images/btn.svg"
+import btn from "../../../../public/images/btn.svg"
 // Define the interface for form data
 interface FormData {
     username: string;

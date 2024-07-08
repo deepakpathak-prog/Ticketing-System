@@ -2,7 +2,7 @@
 import React from "react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import ProfilePic from "../../../public/images/Group 206.svg";
+// import ProfilePic from "../../../public/images/Group 206.svg";
 import Image from 'next/image';
 
 type Post = {
@@ -92,7 +92,7 @@ export default function Example() {
                 {name === "Edit Profile" && (
                   <div className="flex">
                     <div className="py-7 pr-10">
-                      <Image src={ProfilePic} alt="hhh" width={400} />
+                      {/* <Image src={ProfilePic} alt="hhh" width={400} /> */}
                     </div>
                     <div>
                       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">

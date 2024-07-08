@@ -1,49 +1,22 @@
 'use client';
-import axios from 'axios';
-import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import Head from 'next/head';
 import Image from 'next/image';
-import logo from "../../../public/images/logo.svg"
-import cover from "../../../public/images/cover.png"
-import Illustration from "../../../public/images/Illustration.svg"
-import toast, { Toaster } from 'react-hot-toast'
-import btn from "../../../public/images/btn.svg"
-// Define the interface for form data
+import logo from "../../../../public/images/logo.svg";
+import { useForm } from 'react-hook-form';
+import Illustration from "../../../../public/images/Illustration.svg";
+import toast, { Toaster } from 'react-hot-toast';
+import cover from "../../../../public/images/cover.png";
+import btn from "../../../../public/images/btn.svg"
+
 interface FormData {
-    username: string;
-    password: string;
+  username: string;
+  password: string;
 }
 
-const LoginForm = () => {
-
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>(); // Specify the FormData type here
-
-    const onSubmit = async (data: FormData) => { // Explicitly type the data parameter
-        try {
-            const response = await axios.post('http://localhost:8000/login', {
-                email: data.username,
-                password: data.password,
-            });
-
-            if (response.status === 200) {
-                toast.success('Login successful!');
-                
-                console.log('Login successful:', response.data);
-                
-                localStorage.setItem('token', response.data.token);
-                
-                window.location.href = '/Dashboard'; 
-            }
-        } catch (error) {
-            toast.error('Error logging in. Please check your credentials.');
-            console.error('Error logging in:', error);
-            
-        }
-    };
-     
-    return (
-<div className="flex h-screen ">
+const LayoutComponent = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  return (
+   
+    <div className="flex h-screen ">
       {/* Left side with background image */}
       <div className="relative w-1/2 h-screen">
         <Image src={cover} alt="Logo" layout="fill" objectFit="cover" className="absolute"/>
@@ -149,4 +122,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default LayoutComponent;

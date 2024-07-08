@@ -1,3 +1,4 @@
+'use client';
 import ButtonPurple from "../../Components/common/ButtonPurple";
 import Arrow from "../../../public/images/Arrow 2.svg";
 import Image from "next/image";
@@ -8,8 +9,14 @@ import Bell from "../../../public/images/bell.svg"
 import userBg from "../../../public/images/User.svg"
 import Tabs from "../../Components/common/Tabs"
 import Form from "../../Components/common/form"
+import TableThree from "../../Components/common/TableThree"
+import React, { useState } from 'react';
+import Pagination from '../../Components/common/Pagination'
+
 
 export default function Page() {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+    const itemsPerPage = 3;
   return (
     <div className="">
       <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
@@ -29,9 +36,13 @@ export default function Page() {
      {/* Tabs starts */}
 
       <div className="p-2 m-8 bg-[#F9F9F9]">
-       <Tabs/>
+       <TableThree/>
       </div>
+
+      
+
 
     </div>
   );
+
 }
