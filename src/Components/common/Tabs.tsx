@@ -5,7 +5,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 // import ProfilePic from "../../../public/images/Group 206.svg";
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
 import Image from 'next/image';
-import ProfilePic from "../../../public/images/Profile.svg";
+import Profile from "../../../public/images/Profile.svg";
 import Close from "../../../public/images/closebutton.svg"
 import axios from 'axios';
 import toast, { Toaster } from "react-hot-toast";
