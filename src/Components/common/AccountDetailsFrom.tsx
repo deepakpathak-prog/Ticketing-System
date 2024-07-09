@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import Image from "next/image";
-import ProfilePic from "../../../public/images/Group 206.svg";
+import ProfilePic from "../../../public/images/Profile.svg";
 import Close from "../../../public/images/closebutton.svg";
 import toast, { Toaster } from "react-hot-toast";
 
