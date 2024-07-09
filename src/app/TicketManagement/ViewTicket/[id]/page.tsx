@@ -11,7 +11,6 @@ import axios, { AxiosResponse } from "axios";
 import { useRouter, usePathname } from "next/navigation";
 // import TicketFilesTable from "../../../../Components/others/ticketFilesTable";
 
-
 const Page: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [ticketId, setTicketId] = useState("");
@@ -24,7 +23,7 @@ const Page: React.FC = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [files, setFiles] = useState("");
+  const [files, setFiles] = useState();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -52,8 +51,7 @@ const Page: React.FC = () => {
       );
 
       if (response.data) {
-
-        const imagesUrls = response.data.ticketDetails[0].details_images_url
+        const imagesUrls = response.data.ticketDetails[0].details_images_url;
         // console.log(response.data.ticketDetails[0].details_images_url)
         const ticketDetails = response.data.ticketDetails[0];
         const user = response.data.user;
@@ -67,13 +65,14 @@ const Page: React.FC = () => {
         setSubject(ticketDetails.subject);
         setDescription(ticketDetails.details);
 
-
-        // const filesData = response.data.ticketDetails[0].details_images_url.map((url: string, index: number) => ({
-        //   filename: `File ${index + 1}`, 
-        //   uploadedOn: new Date().toLocaleDateString(), 
-        //   fileUrl: url,
-        // // }));
-        // setFiles(filesData);
+        const filesData = response.data.ticketDetails[0].details_images_url.map(
+          (url: string, index: number) => ({
+            filename: `File ${index + 1}`, // You can customize filename based on API response
+            uploadedOn: new Date().toLocaleDateString(), // Example date, modify based on API response
+            fileUrl: url,
+          })
+        );
+        setFiles(filesData);
       }
     } catch (error) {
       console.error("Error fetching tickets:", error);
@@ -265,7 +264,7 @@ const Page: React.FC = () => {
                         <td>{file.filename}</td>
                         <td>{file.uploadedOn}</td>
                         <td>
-                          <button onClick={() => handleDownload(file.filename)}>
+                          <button onClick={() => handleDownload(file.fileUrl)}>
                             Download
                           </button>
                         </td>
