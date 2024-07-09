@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
@@ -9,6 +9,8 @@ import Bell from "../../../../../public/images/bell.svg";
 import userBg from "../../../../../public/images/User.svg";
 import axios, { AxiosResponse } from "axios";
 import { useRouter, usePathname } from "next/navigation";
+// import TicketFilesTable from "../../../../Components/others/ticketFilesTable";
+import TicketFilesTable from "@/Components/others/ticketFilesTable";
 
 const Page: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -66,6 +68,16 @@ const Page: React.FC = () => {
     }
   };
 
+  const files = [
+    { filename: 'Document1.pdf', uploadedOn: '2024-07-09' },
+    { filename: 'Spreadsheet.xlsx', uploadedOn: '2024-07-08' },
+    { filename: 'Presentation.pptx', uploadedOn: '2024-07-07' }
+  ];
+
+  const handleDownload = (filename: string) => {
+    console.log(`Downloading ${filename}`);
+  };
+
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
       case "high":
@@ -82,11 +94,11 @@ const Page: React.FC = () => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "active":
-        return "text-red-300"; 
+        return "text-red-300";
       case "closed":
-        return "text-green-600"; 
+        return "text-green-600";
       default:
-        return "text-gray-600"; 
+        return "text-gray-600";
     }
   };
 
@@ -226,7 +238,30 @@ const Page: React.FC = () => {
               Comments content goes here.
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              Files content goes here.
+              <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left rtl:text-right">
+                  <thead className="text-xs p-3">
+                    <tr>
+                      <th>Filename</th>
+                      <th>Uploaded On</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {files.map((file, index) => (
+                      <tr key={index}>
+                        <td>{file.filename}</td>
+                        <td>{file.uploadedOn}</td>
+                        <td>
+                          <button onClick={() => handleDownload(file.filename)}>
+                            Download
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </TabPanel>
           </TabPanels>
         </TabGroup>
