@@ -62,6 +62,7 @@ export default function Page() {
 
 
   const handleReset = () => {
+    console.log("test")
     setTypeValue("Type");
     setPriorityValue("Priority");
     setStatusValue("Status");
