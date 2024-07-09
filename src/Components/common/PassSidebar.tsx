@@ -22,7 +22,7 @@ const PassSidebar = () => {
     };
   }, []);
 
-  const passSidebarRoutes = ["/FirstPassword", "/AccountDetails"];
+    const passSidebarRoutes = ['/FirstPassword', '/AccountDetails',"/Onboard/ResetPassword",];
 
   if (!isMounted) {
     return null; // Render nothing until component is mounted on client side

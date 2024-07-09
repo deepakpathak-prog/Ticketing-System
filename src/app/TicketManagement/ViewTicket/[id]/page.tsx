@@ -10,7 +10,7 @@ import userBg from "../../../../../public/images/User.svg";
 import axios, { AxiosResponse } from "axios";
 import { useRouter, usePathname } from "next/navigation";
 // import TicketFilesTable from "../../../../Components/others/ticketFilesTable";
-import TicketFilesTable from "@/Components/others/ticketFilesTable";
+
 
 const Page: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);

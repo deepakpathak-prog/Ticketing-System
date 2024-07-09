@@ -1,5 +1,23 @@
+<<<<<<< HEAD
 "use client";
 import Image from "next/image";
+=======
+'use client';
+import ButtonPurple from "../../Components/common/ButtonPurple";
+import Arrow from "../../../public/images/Arrow 2.svg";
+import Image from "next/image";
+import Circle from "../../../public/images/Icon_Order.svg";
+import Table from "../../Components/common/Table";
+import Link from "next/link";
+// import Bell from "../../../public/images/bell.svg"
+// import userBg from "../../../public/images/User.svg"
+// import Tabs from "../../Components/common/Tabs"
+// import Form from "../../Components/common/form"
+import TableThree from "../../Components/common/TableThree"
+import React, { useState } from 'react';
+import Pagination from '../../Components/common/Pagination'
+
+>>>>>>> 9e510bee9b29440fc5f20ae17f5e8d6d64a2b9ec
 import Bell from "../../../public/images/bell.svg";
 import userBg from "../../../public/images/User.svg";
 import { useState, useEffect } from "react";
@@ -30,6 +48,7 @@ type Ticket = {
 };
 
 export default function Page() {
+<<<<<<< HEAD
   // State variables to manage dropdown values
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [typeValue, setTypeValue] = useState("Type");
@@ -68,6 +87,10 @@ export default function Page() {
     setStatusValue("Status");
   };
 
+=======
+  const [currentPage, setCurrentPage] = useState<number>(1);
+    const itemsPerPage = 3;
+>>>>>>> 9e510bee9b29440fc5f20ae17f5e8d6d64a2b9ec
   return (
     <div className="">
       <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
@@ -124,4 +147,5 @@ export default function Page() {
       </div>
     </div>
   );
+
 }
