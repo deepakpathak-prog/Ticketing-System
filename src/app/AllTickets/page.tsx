@@ -18,6 +18,7 @@ export default function Page() {
 
   // Function to handle reset button click
   const handleReset = () => {
+    console.log("test")
     setTypeValue("Type");
     setPriorityValue("Priority");
     setStatusValue("Status");
