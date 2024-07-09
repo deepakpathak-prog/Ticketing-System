@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Image from 'next/image';
+import threeDots from "../../../public/images/three-dots.png"
+import { useRouter } from 'next/navigation';
 
-// Define the type for a single ticket
 type Ticket = {
   id: number;
   ticket_type: string;
   subject: string;
   priority: string;
-  createdAt: string; // Assuming this represents the date
-  updatedAt: string; // Assuming this represents the updated date
-  status: string; // Added status field
+  createdAt: string;
+  updatedAt: string;
+  status: string;
+  actions: string;
 };
 
-// Define the type for the table data
 type TableRow = {
   "Ticket ID": string;
   "Ticket Type": string;
@@ -19,7 +21,8 @@ type TableRow = {
   Priority: string;
   Date: string;
   Updated: string;
-  Status: string; // Added status field
+  Status: string;
+  Actions: string;
 };
 
 type TableProps = {
@@ -27,6 +30,11 @@ type TableProps = {
 };
 
 const Table: React.FC<TableProps> = ({ tickets }) => {
+
+  const router = useRouter();
+
+  const [viewingTicket, setViewingTicket] = useState<Ticket | null>(null);
+
   const tableHead: (keyof TableRow)[] = [
     "Ticket ID",
     "Ticket Type",
@@ -35,9 +43,9 @@ const Table: React.FC<TableProps> = ({ tickets }) => {
     "Status",
     "Date",
     "Updated",
+    "Actions" // New column header for the three dots option
   ];
 
-  // Map fetched tickets data to TableRow format
   const tableData: TableRow[] = tickets.map((ticket) => ({
     "Ticket ID": ticket.id.toString(),
     "Ticket Type": ticket.ticket_type,
@@ -46,9 +54,9 @@ const Table: React.FC<TableProps> = ({ tickets }) => {
     Date: new Date(ticket.createdAt).toLocaleDateString(),
     Updated: new Date(ticket.updatedAt).toLocaleDateString(),
     Status: ticket.status,
+    Actions: 'view'
   }));
 
-  // Function to determine priority text color
   const getPriorityColor = (priority: string): string => {
     switch (priority.toLowerCase()) {
       case 'high':
@@ -56,9 +64,29 @@ const Table: React.FC<TableProps> = ({ tickets }) => {
       case 'medium':
         return 'text-blue-600';
       case 'low':
-        return 'text-purple-600';
+        return 'text-purple-300';
       default:
         return '';
+    }
+  };
+
+  const getStatusColor = (status: string): string => {
+    switch (status.toLowerCase()) {
+      case 'active':
+        return 'text-red-600';
+      case 'closed':
+        return 'text-green-500';
+      default:
+        return '';
+    }
+  };
+
+  const handleViewClick = (ticketId: number) => {
+    const selectedTicket = tickets.find(ticket => ticket.id === ticketId);
+    if (selectedTicket) {
+      setViewingTicket(selectedTicket);
+      console.log(selectedTicket); // Log all details of the selected ticket
+      router.push(`/TicketManagement/ViewTicket/${selectedTicket.id}`)
     }
   };
 
@@ -78,8 +106,30 @@ const Table: React.FC<TableProps> = ({ tickets }) => {
           {tableData.map((row, index) => (
             <tr key={index} className={`odd:bg-white odd:dark:bg-[#FFFFFF] even:bg-[#FBFBFB] dark:border-gray-700`}>
               {tableHead.map((heading) => (
-                <td key={heading} className={`px-6 py-4 ${heading === "Ticket ID" || heading === "Ticket Type" ? 'text-blue-500' : (heading === "Subject" ? 'text-black' : (heading === "Status" && row[heading] === "Active" ? 'text-red-600 ' : (heading === "Status" && row[heading] === "Closed" ? 'text-green-500' : getPriorityColor(row["Priority"]))))}`}>
-                  {row[heading]}
+                <td
+                  key={heading}
+                  className={`px-6 py-4 ${
+                    heading === "Ticket ID" || heading === "Ticket Type"
+                      ? 'text-blue-500'
+                      : heading === "Subject"
+                      ? 'text-black'
+                      : heading === "Status"
+                      ? getStatusColor(row[heading])
+                      : heading === "Priority"
+                      ? getPriorityColor(row[heading])
+                      : ''
+                  }`}
+                >
+                  {heading === "Actions" ? (
+                    <button
+                      className="focus:outline-none"
+                      onClick={() => handleViewClick(parseInt(row["Ticket ID"], 10))}
+                    >
+                      <Image src={threeDots} alt='threedots' width={15} height={15}/>
+                    </button>
+                  ) : (
+                    row[heading]
+                  )}
                 </td>
               ))}
             </tr>

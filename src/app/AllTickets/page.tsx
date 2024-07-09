@@ -1,22 +1,66 @@
-"use client"
+"use client";
 import Image from "next/image";
 import Bell from "../../../public/images/bell.svg";
 import userBg from "../../../public/images/User.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@headlessui/react";
 import Folder from "../../../public/images/folder.svg";
 import Plus from "../../../public/images/Plus.svg";
-import Table from "../../Components/common/Table"
+import Table from "../../Components/common/Table";
 import SearchBar from "../../Components/common/SearchBar";
-import Filterdropdowns from "../../Components/common/Filterdropdowns"
+import Filterdropdowns from "../../Components/common/Filterdropdowns";
+import axios from "axios";
+
+type Ticket = {
+  id: number;
+  user_id: number;
+  organization_id: number;
+  company_legal_name: string;
+  ticket_type: string;
+  priority: string;
+  status: string;
+  subject: string;
+  details: string;
+  details_images_url: string;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+  actions: string;
+};
 
 export default function Page() {
   // State variables to manage dropdown values
+  const [tickets, setTickets] = useState<Ticket[]>([]);
   const [typeValue, setTypeValue] = useState("Type");
   const [priorityValue, setPriorityValue] = useState("Priority");
   const [statusValue, setStatusValue] = useState("Status");
 
-  // Function to handle reset button click
+  useEffect(() => {
+    fetchTickets();
+  }, []);
+
+  const fetchTickets = async () => {
+  try {
+    const response = await axios.get<{ tickets: Ticket[] }>(
+      "http://localhost:8000/viewAllTickets",
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    if (response.data.tickets) {
+      setTickets(response.data.tickets);
+    } else {
+      throw new Error("No tickets found");
+    }
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+  }
+};
+
+
   const handleReset = () => {
     setTypeValue("Type");
     setPriorityValue("Priority");
@@ -72,10 +116,9 @@ export default function Page() {
           handleReset={handleReset}
         />
       </div>
-    <div className="mx-8">
-    <Table />
-    </div>
-     
+      <div className="mx-8">
+        <Table tickets={tickets} />
+      </div>
     </div>
   );
 }

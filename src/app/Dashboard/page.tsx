@@ -12,7 +12,7 @@ import Arrow from '../../../public/images/Arrow 2.svg';
 import ButtonPurple from '../../Components/common/ButtonPurple';
 import Table from '../../Components/common/Table';
 
-// Define the type for a single ticket
+
 type Ticket = {
   id: number;
   user_id: number;
@@ -27,6 +27,7 @@ type Ticket = {
   role: string;
   createdAt: string;
   updatedAt: string;
+  actions: string;
 };
 
 const DashboardPage: React.FC = () => {
@@ -144,7 +145,7 @@ const DashboardPage: React.FC = () => {
           <div className="text-3xl text-[#2A2C3E]">Recent Tickets</div>
           <div className="text-2xl text-[#696969] flex gap-3 justify-center items-center">
             <div>
-              <Link href="/AllTickets">View All Tickets </Link>
+              <Link href="/TicketManagement">View All Tickets </Link>
             </div>
             <div>
               <Link href="#">

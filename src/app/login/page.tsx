@@ -49,8 +49,8 @@ const LoginForm = () => {
   return (
     <>
       <Toaster />
-      <div className=" h-screen grid grid-cols-2">
-        <div className=" relative h-screen flex flex-col items-center">
+      <div className=" h-full grid grid-cols-2">
+        <div className=" relative h-full flex flex-col items-center">
           <Image
             src={cover}
             alt="Background"
@@ -69,13 +69,13 @@ const LoginForm = () => {
               Ticket Management System
             </h1>
           </div>
-          <div className="flex justify-center  text-white mt-14">
+          <div className="flex justify-center items-center text-white mt-14 w-[80%]">
           Streamline your ticketing process: Efficient, intuitive, and reliable ticket management for seamless service.
           </div>
         </div>
 
         {/* ========================================== */}
-        <div className=" flex flex-col justify-center items-center gap-14 w-[70%] mx-auto">
+        <div className=" flex flex-col justify-center items-center gap-14 w-[70%] mx-auto h-full">
           <div className="text-3xl font-bold text-center text-black">
             Welcome to <br></br>Ticket Management System
           </div>
