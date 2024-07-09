@@ -18,7 +18,7 @@ import CustomerForm from "../../../Components/common/CustomerForm";
 import Plus from "../../../../public/images/Plus.svg";
 import View from "../../../../public/images/eye.svg";
 import Delete from "../../../../public/images/delete.svg";
-import ProfilePic from "../../../../public/images/profileGrp.svg";
+import ProfilePic from "../../../../public/images/Profile.svg";
 import memberpic from "../../../../public/images/unsplash_8YG31Xn4dSw.png";
 import DropdownBlack from "../../../../public/images/DropdownBlack.svg";
 import info from "../../../../public/images/info-circle_svgrepo.com.svg";
