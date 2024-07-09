@@ -66,7 +66,7 @@ const LoginForm = () => {
         </div>
       </div>
         {/* ========================================== */}
-        <div className=" flex flex-col justify-center items-center gap-14 w-[70%] mx-auto">
+        <div className=" flex flex-col justify-center items-center gap-14 w-[70%] mx-auto h-full">
           <div className="text-3xl font-bold text-center text-black">
             Welcome to <br></br>Ticket Management System
           </div>

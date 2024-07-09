@@ -8,9 +8,8 @@ import Profile from "../../../public/images/Profile.svg";
 import Close from "../../../public/images/close.svg";
 import toast, { Toaster } from "react-hot-toast";
 
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 type FormInputs = {
   customerName: string;
@@ -32,9 +31,10 @@ interface UserDetailsResponse {
 }
 
 const AccountDetailsForm: React.FC = () => {
+  const router = useRouter();
+  const pathname = usePathname();
 
- const router = useRouter()
-  
+
   const [userEmail, setUserEmail] = useState("");
   useEffect(() => {
     fetchUserDetails();
@@ -58,7 +58,29 @@ const AccountDetailsForm: React.FC = () => {
     }
   };
 
-  const handleSkipClick = () => {};
+  const renderSkipButton =
+    pathname === "/AccountDetails" ? (
+      <Link href="/Dashboard">
+        <button className="block text-sm text-[#5027D9]">Skip for now</button>
+      </Link>
+    ) : null;
+
+  const saveOrNextButton =
+    pathname === "/AccountDetails" ? (
+      <button
+        type="submit"
+        className="btn-submit ml-auto block rounded bg-[#5027D9] py-4 px-14 text-sm text-white"
+      >
+        Next
+      </button> 
+    ) : (
+      <button
+        type="submit"
+        className="btn-submit ml-auto block rounded bg-[#5027D9] py-4 px-14 text-sm text-white"
+      >
+        Save Details
+      </button>
+    );
 
   const {
     register,
@@ -114,7 +136,7 @@ const AccountDetailsForm: React.FC = () => {
       console.log("Form submitted successfully:", response.data);
       toast.success("Account details added successfully");
 
-      router.push("/Dashboard")
+      router.push("/Dashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -352,18 +374,9 @@ const AccountDetailsForm: React.FC = () => {
           </div>
           <div className="flex justify-end w-full mt-6 col-span-2">
             <div className="flex justify-between items-center gap-14">
-              <Link href="/Dashboard">
-                <button className="block text-sm text-[#5027D9] ">
-                  Skip for now
-                </button>
-              </Link>
+              {renderSkipButton}
 
-              <button
-                type="submit"
-                className="btn-submit ml-auto block rounded bg-[#5027D9] py-4 px-14 text-sm text-white"
-              >
-                Next
-              </button>
+              {saveOrNextButton}
             </div>
           </div>
         </div>
