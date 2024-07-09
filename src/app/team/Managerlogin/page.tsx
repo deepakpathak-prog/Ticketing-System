@@ -28,8 +28,8 @@ const LayoutComponent = () => {
           <Image src={Illustration} alt="Illustration" className="w-[50%] max-w-lg" />
           {/* Heading and paragraph */}
           <div className="text-center mt-11 w-3/4">
-            <h1 className="text-2xl font-bold text-[#FFFFFF]">Ticket Management System</h1>
-            <p className="text-lg text-[#F5F5F5] mt-8 leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+            <h1 className="text-2xl font-bold text-[#FFFFFF] font-lato">Ticket Management System</h1>
+            <p className="text-lg text-[#F5F5F5] mt-8 leading-relaxed font-lato">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
           </div>
         </div>
       </div>
@@ -37,25 +37,15 @@ const LayoutComponent = () => {
       {/* Right side with form */}
       <div className="w-1/2 flex flex-col items-center justify-center p-10 bg-white">
         <h1
-          className="text-3xl font-bold mb-6 text-center"
-          style={{
-            width: '380px',
-            height: '75px',
-            lineHeight: '37.5px',
-            fontFamily: 'Zen Kaku Gothic Antique',
-            fontWeight: '700',
-            fontSize: '31.25px',
-            letterSpacing: '-0.5px',
-            alignContent: 'center',
-            color: '#242424',
-          }}
+          className="  mb-6 text-center font-lato text-[#242424] mt-8 w-1/2 font-bold text-3xl"
+         
         >
           Welcome to Ticket Management System
         </h1>
         <form>
           <div className="mb-4 relative">
             <label
-              className="block text-[#5E626C]  font-light mb-2 text-base "
+              className="block text-[#5E626C]  font-light mb-2 text-base font-lato"
               htmlFor="username"
             
             >
@@ -73,7 +63,7 @@ const LayoutComponent = () => {
           </div>
           <div className="mb-4 relative">
           <label
-              className="block text-[#5E626C]  font-light mb-2 text-base "
+              className="block text-[#5E626C]  font-light mb-2 text-base font-lato "
               htmlFor="username"
             
             >
@@ -83,16 +73,13 @@ const LayoutComponent = () => {
               {...register("password", { required: true })}
               id="password"
               type="password"
-              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight focus:outline-none border-[#7F7F7F]"
+              className="shadow appearance-none border rounded w-full py-3 px-3 text-gray-700 leading-tight font-lato focus:outline-none border-[#7F7F7F]"
               style={{
                 width: '520px',
-                height: '46px',
-                borderRadius: '4px',
-                border: '1px solid #7F7F7F',
               }}
               placeholder="Enter your password"
             />
-            {errors.password && <p className="text-red-500 text-xs italic">Password is required.</p>}
+            {errors.password && <p className="text-red-500 text-xs italic font-lato">Password is required.</p>}
           </div>
           <div className="flex items-center justify-center">
             <button
@@ -109,9 +96,9 @@ const LayoutComponent = () => {
             </button>
           </div>
           <div className="text-sm mt-8 flex justify-center">
-            <a href="#" className="text-[#424242] hover:underline mr-2">FORGOT PASSWORD?</a>
+            <a href="#" className="text-[#424242] hover:underline mr-2 font-lato">Forgot password?</a>
             <span className="text-gray-500">|</span>
-            <a href="#" className=" hover:underline ml-2 text-[#212121] font-semibold">RESET PASSWORD</a>
+            <a href="#" className=" hover:underline ml-2 text-[#212121] font-semibold font-lato">RESET PASSWORD</a>
           </div>
           <div className=" flex items-center justify-center">
   <Image src={btn} alt="Icon" className="mt-8" />

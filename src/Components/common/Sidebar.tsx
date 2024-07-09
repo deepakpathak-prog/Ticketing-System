@@ -7,7 +7,7 @@ import ticketmanagementgrp from '../../../public/images/ticketManagementGrp.svg'
 import { useRouter } from 'next/router';
 
 // const router = useRouter()
-const Sidebar = () => {
+const Sidebar = ({}) => {
 
     
     return (

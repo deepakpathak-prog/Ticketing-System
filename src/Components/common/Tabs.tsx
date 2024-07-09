@@ -5,7 +5,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 // import ProfilePic from "../../../public/images/Group 206.svg";
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
 import Image from 'next/image';
-import ProfilePic from "../../../public/images/Group 206.svg";
+import Profile from "../../../public/images/Profile.svg";
 import Close from "../../../public/images/closebutton.svg"
 
 // Define types for form inputs
@@ -145,7 +145,7 @@ const Example: React.FC = () => {
                   <div className="flex">
                     <div className="py-7 pr-10">
                       {/* <Image src={ProfilePic} alt="hhh" width={400} /> */}
-                      <Image src={ProfilePic} alt="Profile Pic" width={400} />
+                      <Image src={Profile} alt="Profile Pic" width={400} />
                     </div>
                     <div>
                       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">

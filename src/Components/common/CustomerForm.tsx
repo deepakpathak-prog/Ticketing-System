@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
 import Image from 'next/image';
-import ProfilePic from "../../../public/images/Group 206.svg";
+import Profile from "../../../public/images/Profile.svg";
 import Close from "../../../public/images/closebutton.svg";
 
 // Define types for form inputs
@@ -96,7 +96,7 @@ const CustomerForm: React.FC = () => {
       <div className="text-xl font-semibold">Basic Details</div>
       <div className="flex py-5 items-center">
         <div className="w-[20%]">
-          <Image src={ProfilePic} alt="Profile Pic" className="pr-3"  />
+          <Image src={Profile} alt="Profile Pic" className="pr-3"  />
         </div>
         <div className="grid grid-cols-2 gap-4 w-full">
           <div>

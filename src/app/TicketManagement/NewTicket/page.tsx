@@ -5,7 +5,7 @@ import addticket from "../../../../public/images/add.svg";
 import Bell from "../../../../public/images/bell.svg";
 import userBg from "../../../../public/images/User.svg";
 import breadcrumbArrow from "../../../../public/images/BreadcrumbArrow.svg";
-import DropdownArrow from "../../../../public/images/dropdown-arrow_svgrepo.com.svg";
+import DropdownArrow from "../../../../public/images/dropdown.svg"
 import Link from "next/link";
 import { Button } from "@headlessui/react";
 import axios from 'axios';

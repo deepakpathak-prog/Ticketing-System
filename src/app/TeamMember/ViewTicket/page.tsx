@@ -8,12 +8,16 @@ import edit from "../../../../public/images/edit.svg"
 import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import close from "../../../../public/images/close.svg"
 import AttachmentTable from "../../../Components/common/AttachmentTable"
+import NextBreadCrumb from "../../../Components/common/NextBreadCrumb";
 
 const ViewTicketPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpen1, setIsModalOpen1] = useState(false);
 
-
+    const breadcrumbItems = [
+        { href: '/TeamMember/TicketManagement', label: 'Ticket Management' },
+        { label: 'View Ticket' }
+      ];
     // Mock ticket data (replace with actual data fetching logic)
     const ticket = {
         id: '#1234',
@@ -30,8 +34,9 @@ const ViewTicketPage: React.FC = () => {
 
     return (
         <div>
+            <NextBreadCrumb items={breadcrumbItems} />
             {/* Dashboard Header */}
-            <div className='flex justify-between p-6 bg-[#FFFFFF] drop-shadow-md'>
+            {/* <div className='flex justify-between p-6 bg-[#FFFFFF] drop-shadow-md'>
                 <h1 className="font-medium text-xl">Dashboard</h1>
                 <div className='flex space-x-4'>
                     <div className="w-10 h-10 bg-[#F8F9FA] rounded-md flex items-center justify-center">
@@ -39,7 +44,7 @@ const ViewTicketPage: React.FC = () => {
                     </div>
                     <div className="w-10 h-10 bg-[#F8F9FA] rounded-md flex items-center justify-center"></div>
                 </div>
-            </div>
+            </div> */}
 
             {/* View Ticket Section */}
             <div className="p-8">

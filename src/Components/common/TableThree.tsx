@@ -13,6 +13,10 @@ type TableRow = {
     Updated: string;
 };
 
+type TableProps = {
+    role: 'team' | 'TeamMember';
+};
+
 const tableHead: (keyof TableRow)[] = [
     "Ticket ID",
     "Subject",
@@ -97,7 +101,7 @@ const tableData: TableRow[] = [
     },
 ];
 
-const Table: React.FC = () => {
+const Table: React.FC<TableProps> = ({ role }) => {
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -116,12 +120,11 @@ const Table: React.FC = () => {
                             {tableHead.map((heading) => (
                                 <td key={heading} className={`px-6 py-4 ${heading === "Ticket ID" ? "text-[#5027D9]" : ""}`}>
                                     {heading === "Ticket ID" ? (
-                                        <Link href={`/team/ViewTicket?ticketId=${encodeURIComponent(row["Ticket ID"].substr(1))}`}>
-                                            <span className="underline cursor-pointer">{row["Ticket ID"]}</span>
-                                        </Link>
-
+                                       <Link href={`/${role}/ViewTicket?ticketId=${encodeURIComponent(row["Ticket ID"].substr(1))}`}>
+                                       <span className="underline cursor-pointer">{row["Ticket ID"]}</span>
+                                   </Link>
                                     ) : heading === "Priority" ? (
-                                        <span className={`inline-block px-3 py-1 rounded-full ${row[heading] === "Low" ? "bg-[#F4F2FF] text-[#5A21DB]" : row[heading] === "Mid" ? "bg-[#F4F2FF] text-[#004FCF]" : row[heading] === "High" ? "bg-[#FFF9F9] text-[#D91A1A]" : row[heading] === "Average" ? "bg-[#FFFEF6] text-[#D47F00]" :""}`}>
+                                        <span className={`inline-block px-3 py-1 rounded-full ${row[heading] === "Low" ? "bg-[#F4F2FF] text-[#5A21DB]" : row[heading] === "Mid" ? "bg-[#F4F2FF] text-[#004FCF]" : row[heading] === "High" ? "bg-[#FFF9F9] text-[#D91A1A]" : row[heading] === "Average" ? "bg-[#FFFEF6] text-[#D47F00]" : ""}`}>
                                             {row[heading]}
                                         </span>
                                     ) : heading === "Status" ? (

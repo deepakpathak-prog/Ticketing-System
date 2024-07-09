@@ -12,7 +12,7 @@ export default function ClientComponent({ children }: { children: React.ReactNod
 
   useEffect(() => {
     const noSidebarRoutes = ["/login", "/reset","/FirstPassword","/AccountDetails","/team/Managerlogin","/Onboard/ManagerOnboard","/Onboard/ResetPassword"]; // Routes where the main sidebar should be hidden
-    const passSidebarRoutes = ["/FirstPassword", "/AccountDetails","/Onboard/ResetPassword"]; // Routes where PassSidebar should be shown
+    const passSidebarRoutes = ["/FirstPassword", "/AccountDetails","/Onboard/ResetPassword","/Onboard/AccountDetails"]; // Routes where PassSidebar should be shown
 
     setShouldHideSidebar(noSidebarRoutes.includes(pathname));
     setShouldShowPassSidebar(passSidebarRoutes.includes(pathname));

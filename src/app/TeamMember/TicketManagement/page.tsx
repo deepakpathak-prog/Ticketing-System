@@ -95,7 +95,7 @@ const CustomerOne= () => {
     </div>
     </div>
     <div className='p-6'>
-                <TableThree />
+                <TableThree role="TeamMember" />
             </div>
     </div>
   );
