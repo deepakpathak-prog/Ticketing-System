@@ -22,7 +22,7 @@ const PassSidebar = () => {
     };
   }, []);
 
-    const passSidebarRoutes = ['/FirstPassword', '/AccountDetails',"/Onboard/ResetPassword",];
+    const passSidebarRoutes = ['/FirstPassword', '/AccountDetails',"/Onboard/ResetPassword","/Onboard/AccountDetails"];
 
   if (!isMounted) {
     return null; // Render nothing until component is mounted on client side
@@ -52,7 +52,7 @@ const PassSidebar = () => {
                 <li className="relative pl-6 mb-6">
                   <span className="absolute left-2 top-4 w-0.5 h-12 bg-white"></span>
                   <span className="absolute left-1 top-3 w-3 h-3 rounded-full bg-[#FF00D6]"></span>
-                  <Link href="/reset"><div className="text-white pt-1 pl-2">Reset Password</div></Link>
+                  <Link href="/FirstPassword"><div className="text-white pt-1 pl-2">Reset Password</div></Link>
                 </li>
                 <li className="relative pl-6 mb-6">
                   <span className="absolute left-2 top-0 w-0.5 h-8 bg-white"></span>

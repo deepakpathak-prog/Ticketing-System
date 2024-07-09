@@ -6,6 +6,36 @@ import send from "../../../public/images/send.svg"
 import AttachmentTable from "../../Components/common/AttachmentTable"
 const TabThree: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'EventsTimeline' | 'Comments' | 'Attachments'>('EventsTimeline');
+  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null); // State to store selected files
+
+  // Function to handle file selection
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      setSelectedFiles(files); // Store selected files in state
+    }
+  };
+
+  // Function to handle file upload
+  const handleFileUpload = () => {
+    if (selectedFiles) {
+      // Validate file types or perform any other necessary checks
+
+      // Handle file upload logic here (e.g., upload to server, display preview, etc.)
+      console.log('Selected files:', selectedFiles);
+
+      // Reset selected files after upload
+      setSelectedFiles(null);
+    }
+  };
+
+  // Function to open file selection dialog
+  const openFilePicker = () => {
+    const fileInput = document.getElementById('fileInput');
+    if (fileInput) {
+      fileInput.click(); // Trigger click event on file input element
+    }
+  };
 
   return (
     <div className="">
@@ -105,16 +135,26 @@ const TabThree: React.FC = () => {
           <div className='p-6'>
     <div className="flex justify-between items-center mb-4">
       <h2 className="text-xl font-semibold">All Uploaded Files</h2>
-      <button className="bg-[#5027D9]  text-white py-2 px-4 rounded-lg">
-        + Add New
-      </button>
-    </div>
-    <AttachmentTable />
-  </div>
-    
+       {/* Hidden file input element */}
+       <input
+              id="fileInput"
+              type="file"
+              onChange={handleFileChange}
+              multiple
+              className="hidden"
+            />
+            {/* Button to trigger file selection */}
+            <button
+              className="bg-[#5027D9] text-white py-2 px-4 rounded-lg"
+              onClick={openFilePicker}
+            >
+              + Add New
+            </button>
+          </div>
+          <AttachmentTable />
+        </div>
       )}
     </div>
-    
   );
 };
 

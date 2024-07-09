@@ -17,7 +17,7 @@ const Manager = () => {
     return (
         <div className=''>
             <div className='flex justify-between p-6 bg-[#FFFFFF] drop-shadow-md'>
-                <h1 className="font-medium text-xl">Dasboard</h1>
+                <h1 className="font-normal text-xl">Dasboard</h1>
                 <div className='flex space-x-4'>
                 <div className="w-10 h-10 bg-[#F8F9FA] rounded-md flex items-center justify-center">
         <Image src={bell} alt="Another Icon" width={20} height={20} />
@@ -27,7 +27,7 @@ const Manager = () => {
             </div>
             <div className='p-6 '>
                 <div className=" shadow-lg rounded-md">
-                    <h1 className=" p-7 text-[#2A2C3E] text-2xl font-bold font-family:lato ">Summary</h1>
+                    <h1 className=" p-7 text-[#2A2C3E] text-xl font-bold font-lato ">Summary</h1>
                     <div className="grid grid-cols-4 gap-4 pl-5 pr-5">
                         <div className="bg-[#F7F7F7] p-8  rounded-md  mb-7">
                             <div className="grid grid-cols-2 pb-10">

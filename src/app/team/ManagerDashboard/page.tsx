@@ -11,13 +11,15 @@ import group from "../../../../public/images/group.svg"
 import warning from "../../../../public/images/warning.svg"
 import test from "../../../../public/images/test.svg"
 import tick from "../../../../public/images/tick.svg"
+import Sidebar from "../../../Components/common/Sidebar"
 
 
 const Manager = () => {
     return (
+        
         <div className=''>
             <div className='flex justify-between p-6 bg-[#FFFFFF] drop-shadow-md'>
-                <h1 className="font-medium text-xl">Dasboard</h1>
+                <h1 className="font-medium text-xl font-lato">Dasboard</h1>
                 <div className='flex space-x-4'>
                 <div className="w-10 h-10 bg-[#F8F9FA] rounded-md flex items-center justify-center">
         <Image src={bell} alt="Another Icon" width={20} height={20} />
@@ -27,7 +29,7 @@ const Manager = () => {
             </div>
             <div className='p-6 '>
                 <div className=" shadow-lg rounded-md">
-                    <h1 className=" p-7 text-[#2A2C3E] text-2xl font-bold font-family:lato ">Summary</h1>
+                    <h1 className=" p-7 text-[#2A2C3E] text-2xl font-bold font-lato ">Summary</h1>
                     <div className="grid grid-cols-4 gap-4 pl-5 pr-5">
                         <div className="bg-[#F7F7F7] p-8  rounded-md  mb-7">
                             <div className="grid grid-cols-2 pb-10">
@@ -35,12 +37,12 @@ const Manager = () => {
                                     <Image src={group} alt="Order Icon" width={30} height={30} className="rounded-full" />
                                 </div>
                                 <div className="flex justify-end items-end">
-                                    <Image src={Arrow} alt="hhh" width={32} />
+                                    <Image src={Arrow} alt="hhh" width={30} />
                                 </div>
                             </div>
                             <div className="pl-5 grid gap-3">
                                 <div className="text-4xl text-[#5027D9]">75</div>
-                                <div className="text-[#696969]">New tickets</div>
+                                <div className="text-[#696969] font-semibold font-Lato">New Tickets</div>
                             </div>
                         </div>
 
@@ -50,12 +52,12 @@ const Manager = () => {
                                     <Image src={warning} alt="Order Icon" width={30} height={30} className="rounded-full" />
                                 </div>
                                 <div className="flex justify-end items-end">
-                                    <Image src={Arrow} alt="hhh" width={32} />
+                                    <Image src={Arrow} alt="hhh" width={30} />
                                 </div>
                             </div>
                             <div className="pl-5 grid gap-3">
                                 <div className="text-4xl text-[#5027D9]">75</div>
-                                <div className="text-[#696969]">Open tickets</div>
+                                <div className="text-[#696969] font-lato font-semibold text-base">High Priority Tickets</div>
                             </div>
                         </div>
                         <div className="bg-[#F7F7F7] p-8 rounded-md  mb-7">
@@ -64,12 +66,12 @@ const Manager = () => {
                                     <Image src={test} alt="Order Icon" width={30} height={30} className="rounded-full" />
                                 </div>
                                 <div className="flex justify-end items-end">
-                                    <Image src={Arrow} alt="hhh" width={32} />
+                                    <Image src={Arrow} alt="hhh" width={30} />
                                 </div>
                             </div>
                             <div className="pl-5 grid gap-3">
                                 <div className="text-4xl text-[#5027D9]">75</div>
-                                <div className="text-[#696969]">New tickets</div>
+                                <div className="text-[#696969] font-semibold font-lato">Open tickets</div>
                             </div>
                         </div>
 
@@ -79,12 +81,12 @@ const Manager = () => {
                                     <Image src={tick} alt="Order Icon" width={30} height={30} className="rounded-full" />
                                 </div>
                                 <div className="flex justify-end items-end">
-                                    <Image src={Arrow} alt="hhh" width={32} />
+                                    <Image src={Arrow} alt="hhh" width={30} />
                                 </div>
                             </div>
                             <div className="pl-5 grid gap-3">
                                 <div className="text-4xl text-[#5027D9]">75</div>
-                                <div className="text-[#696969]">Closed tickets</div>
+                                <div className="text-[#696969] font-lato font-semibold">Closed tickets</div>
                             </div>
                         </div>
                     </div>
@@ -100,6 +102,7 @@ const Manager = () => {
             <div className='p-6'>
                 <TableTwo />
             </div>
+            
         </div>
     );
 };

@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import Image from "next/image";
-import ProfilePic from "../../../public/images/Group 206.svg";
-import Close from "../../../public/images/closebutton.svg";
+import Profile from "../../../public/images/Profile.svg";
+import Close from "../../../public/images/close.svg";
 import toast, { Toaster } from "react-hot-toast";
 
 import Link from "next/link";
@@ -149,7 +149,7 @@ const AccountDetailsForm: React.FC = () => {
         <div className="text-xl font-semibold">Basic Details</div>
         <div className="flex py-5 items-center">
           <div className="w-[20%]">
-            <Image src={ProfilePic} alt="Profile Pic" className="pr-3" />
+            <Image src={Profile} alt="Profile Pic" className="pr-3" />
           </div>
           <div className="grid grid-cols-2 gap-4 w-full">
             <div>
