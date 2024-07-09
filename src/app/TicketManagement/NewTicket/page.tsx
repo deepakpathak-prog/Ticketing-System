@@ -8,9 +8,9 @@ import breadcrumbArrow from "../../../../public/images/BreadcrumbArrow.svg";
 import DropdownArrow from "../../../../public/images/dropdown-arrow_svgrepo.com.svg";
 import Link from "next/link";
 import { Button } from "@headlessui/react";
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
-
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import Delete from "../../../../public/images/delete_white.svg";
 
 export default function Page() {
   const [ticketType, setTicketType] = useState("Select Ticket Type");
@@ -58,6 +58,10 @@ export default function Page() {
     if (e.target.files) {
       setSelectedFiles([...selectedFiles, ...Array.from(e.target.files)]);
     }
+  };
+
+  const handleFileDelete = (index: number) => {
+    setSelectedFiles(selectedFiles.filter((_, i) => i !== index));
   };
 
   const handleCancel = () => {
@@ -111,31 +115,35 @@ export default function Page() {
     e.preventDefault();
     if (validateForm()) {
       const formData = new FormData();
-      formData.append('ticket_type', ticketType);
-      formData.append('priority', priority);
-      formData.append('subject', subject);
-      formData.append('details', requestDetails);
-      selectedFiles.forEach(file => formData.append('files', file));
+      formData.append("ticket_type", ticketType);
+      formData.append("priority", priority);
+      formData.append("subject", subject);
+      formData.append("details", requestDetails);
+      selectedFiles.forEach((file) => formData.append("files", file));
 
       try {
-        const response = await axios.post('http://localhost:8000/addNewTicket', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust as needed
-          },
-        });
-        toast.success('New Ticket Added Successfully');
+        const response = await axios.post(
+          "http://localhost:8000/addNewTicket",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust as needed
+            },
+          }
+        );
+        toast.success("New Ticket Added Successfully");
 
         handleCancel();
       } catch (error) {
-        console.error('Error adding new ticket:', error);
-      } 
+        console.error("Error adding new ticket:", error);
+      }
     }
   };
 
   return (
     <div className="">
-      <Toaster /> 
+      <Toaster />
       <div className="flex items-center justify-between shadow-md p-8 sticky top-0 z-50 bg-white">
         <div className="flex items-center gap-3">
           <div className="text-[#2A2C3E] text-xl">
@@ -160,7 +168,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="p-10 mx-10 my-12 bg-[#F9F9F9] rounded-md h-screen shadow-md">
+      <div className="p-10 mx-10 my-12 bg-[#F9F9F9] rounded-md h-full shadow-md">
         <div className="text-[#2A2C3E] text-2xl mb-6">New Ticket</div>
 
         <form className="space-y-6" onSubmit={handleFormSubmit}>
@@ -174,7 +182,6 @@ export default function Page() {
                   id="ticketType"
                   name="ticketType"
                   value={ticketType}
-                  
                   onChange={handleTicketTypeChange}
                   className={`mt-1 text-[#5E626C] w-full p-2 px-3 bg-white rounded-md appearance-none focus:outline-none ${
                     errors.priority ? "border-red-500" : "border-gray-300"
@@ -296,21 +303,43 @@ export default function Page() {
               className="hidden"
               multiple
             />
-            <div className="mt-4">
-              {selectedFiles.length > 0 && (
-                <div>
-                  <h2 className="text-md font-medium text-lg">
-                    Attached Files:
-                  </h2>
-                  <ul className="list-disc pl-5">
-                    {selectedFiles.map((file, index) => (
-                      <li key={index} className="text-[#5E626C]">
-                        {file.name}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+            <div className="rounded-md bg-[#F0ECFB]">
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                className="hidden"
+                multiple
+              />
+              <div className="mt-4">
+                {selectedFiles.length > 0 && (
+                  <div>
+                    <h2 className="text-md font-medium text-lg"></h2>
+                    <div className="grid grid-cols-3 gap-8">
+                      {selectedFiles.map((file, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center bg-white border-2 border-[#D9D9D9] rounded-xl shadow-md "
+                        >
+                          <span className="text-black text-sm py-4 px-3 ">
+                            {file.name}
+                          </span>
+                          
+                          <button
+                            type="button"
+                            onClick={() => handleFileDelete(index)}
+                            className="bg-[#5027D9] rounded-r-md border-r py-4 px-3"
+                          >
+                            <Image src={Delete} alt="delete" width={25}/>
+                          </button>
+                          </div>
+                          
+                        
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <div className="flex gap-5 justify-end">
