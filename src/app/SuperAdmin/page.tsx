@@ -32,29 +32,6 @@ export default function SuperAdminDashboard() {
 
   const [tickets, setTickets] = useState([]);
 
-  useEffect(() => {
-    fetchTickets();
-  }, []);
-
-  const fetchTickets = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/viewAllTickets", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      if (!response.data.tickets) {
-        throw new Error("No tickets found");
-      }
-
-      setTickets(response.data.tickets);
-    } catch (error) {
-
-      toast.error('Failed to fetch tickets');
-
-    }
-  };
 
   return (
     <div>

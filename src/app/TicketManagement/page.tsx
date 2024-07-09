@@ -1,5 +1,23 @@
+<<<<<<< HEAD
 "use client";
 import Image from "next/image";
+=======
+'use client';
+import ButtonPurple from "../../Components/common/ButtonPurple";
+import Arrow from "../../../public/images/Arrow 2.svg";
+import Image from "next/image";
+import Circle from "../../../public/images/Icon_Order.svg";
+// import Table from "../../Components/common/Table";
+// import Link from "next/link";
+// import Bell from "../../../public/images/bell.svg"
+// import userBg from "../../../public/images/User.svg"
+// import Tabs from "../../Components/common/Tabs"
+// import Form from "../../Components/common/form"
+import TableThree from "../../Components/common/TableThree"
+// import React, { useState } from 'react';
+import Pagination from '../../Components/common/Pagination'
+
+>>>>>>> ff8cad034f12d6cae8377f3d404146eb876b2a2e
 import Bell from "../../../public/images/bell.svg";
 import userBg from "../../../public/images/User.svg";
 import { useState, useEffect } from "react";
@@ -68,8 +86,11 @@ export default function Page() {
     setStatusValue("Status");
   };
 
+<<<<<<< HEAD
   const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 3;
+=======
+>>>>>>> ff8cad034f12d6cae8377f3d404146eb876b2a2e
   return (
     <div className="">
       <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">

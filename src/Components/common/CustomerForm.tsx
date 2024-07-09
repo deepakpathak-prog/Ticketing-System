@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
 import Image from 'next/image';
-import ProfilePic from "../../../public/images/Group 206.svg";
+import ProfilePic from "../../../public/images/group.svg";
 import Close from "../../../public/images/closebutton.svg";
 
 // Define types for form inputs
