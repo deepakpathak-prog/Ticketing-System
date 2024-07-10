@@ -74,8 +74,8 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="">
-      <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
+    <div className="-z-10">
+      {/* <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
         <div className="text-[#17192b] text-xl">Dashboard</div>
         <div className="flex gap-4 justify-center items-center">
           <div>
@@ -85,7 +85,7 @@ const DashboardPage: React.FC = () => {
             <Image src={userBg} alt="hhh" width={50} />
           </div>
         </div>
-      </div>
+      </div> */}
       <div>
         <Link href="/TicketManagement/NewTicket">
           <ButtonPurple />

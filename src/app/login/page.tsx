@@ -47,16 +47,16 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <div className=" fixed inset-0 w-full h-full">
       <Toaster />
       <div className=" h-screen grid grid-cols-2">
-      <div className="relative w-1/2 h-screen">
-        <Image src={cover} alt="Logo" layout="fill" objectFit="cover" className="absolute"/>
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-8">
+      <div className="relative h-screen py-10 gap-4 flex items-center">
+        <Image src={cover} alt="Logo" layout="fill" objectFit="cover" className="absolute z-[-1]"/>
+        <div className=" w-fit mx-auto absolute top-10 right-1/2 translate-x-1/2 ">
           <Image src={logo} alt="Logo" width={200} height={100} />
         </div>
         {/* Image below the logo */}
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-44 w-full flex flex-col items-center">
+        <div className=" w-full flex flex-col gap-4 items-center ">
           <Image src={Illustration} alt="Illustration" className="w-[50%] max-w-lg" />
           {/* Heading and paragraph */}
           <div className="text-center mt-11 w-3/4">
@@ -142,7 +142,7 @@ const LoginForm = () => {
         </div>
       </div>
       
-    </>
+    </div>
   );
 };
 

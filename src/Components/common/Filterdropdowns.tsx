@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import DropdownArrow from "../../../public/images/dropdown-arrow_svgrepo.com.svg";
+import DropdownArrow from "../../../public/images/dropdown.svg";
 import { Button } from "@headlessui/react";
 
 interface DropdownFiltersProps {
