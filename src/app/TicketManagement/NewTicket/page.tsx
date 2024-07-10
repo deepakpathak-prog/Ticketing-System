@@ -8,9 +8,8 @@ import breadcrumbArrow from "../../../../public/images/BreadcrumbArrow.svg";
 import DropdownArrow from "../../../../public/images/dropdown-arrow_svgrepo.com.svg";
 import Link from "next/link";
 import { Button } from "@headlessui/react";
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
-
+import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Page() {
   const [ticketType, setTicketType] = useState("Select Ticket Type");
@@ -111,31 +110,38 @@ export default function Page() {
     e.preventDefault();
     if (validateForm()) {
       const formData = new FormData();
-      formData.append('ticket_type', ticketType);
-      formData.append('priority', priority);
-      formData.append('subject', subject);
-      formData.append('details', requestDetails);
-      selectedFiles.forEach(file => formData.append('files', file));
+      formData.append("ticket_type", ticketType);
+      formData.append("priority", priority);
+      formData.append("subject", subject);
+      formData.append("details", requestDetails);
 
-      try {
-        const response = await axios.post('http://localhost:8000/addNewTicket', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // Adjust as needed
-          },
-        });
-        toast.success('New Ticket Added Successfully');
+      console.log({selectedFiles});
+      
+      selectedFiles.forEach((file) => formData.append("files", file));
 
-        handleCancel();
-      } catch (error) {
-        console.error('Error adding new ticket:', error);
-      } 
+      // try {
+      //   const response = await axios.post(
+      //     "http://localhost:8000/addNewTicket",
+      //     formData,
+      //     {
+      //       headers: {
+      //         "Content-Type": "multipart/form-data",
+      //         Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust as needed
+      //       },
+      //     }
+      //   );
+      //   toast.success("New Ticket Added Successfully");
+
+      //   handleCancel();
+      // } catch (error) {
+      //   console.error("Error adding new ticket:", error);
+      // }
     }
   };
 
   return (
     <div className="">
-      <Toaster /> 
+      <Toaster />
       <div className="flex items-center justify-between shadow-md p-8 sticky top-0 z-50 bg-white">
         <div className="flex items-center gap-3">
           <div className="text-[#2A2C3E] text-xl">
@@ -174,7 +180,6 @@ export default function Page() {
                   id="ticketType"
                   name="ticketType"
                   value={ticketType}
-                  
                   onChange={handleTicketTypeChange}
                   className={`mt-1 text-[#5E626C] w-full p-2 px-3 bg-white rounded-md appearance-none focus:outline-none ${
                     errors.priority ? "border-red-500" : "border-gray-300"

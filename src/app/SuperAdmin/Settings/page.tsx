@@ -18,7 +18,7 @@ import CustomerForm from "../../../Components/common/CustomerForm";
 import Plus from "../../../../public/images/Plus.svg";
 import View from "../../../../public/images/eye.svg";
 import Delete from "../../../../public/images/delete.svg";
-import ProfilePic from "../../../../public/images/Group 206.svg";
+import ProfilePic from "../../../../public/images/group.svg";
 
 const tabClasses = ({ selected }: { selected: boolean }) =>
   `px-7 text-left w-fit pb-4 text-sm font-medium focus:outline-none border-b-2 ${

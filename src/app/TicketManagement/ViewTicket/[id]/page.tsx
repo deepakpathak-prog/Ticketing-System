@@ -238,9 +238,9 @@ const Page: React.FC = () => {
               Comments content goes here.
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right">
-                  <thead className="text-xs p-3">
+              <div>
+                <table>
+                  <thead>
                     <tr>
                       <th>Filename</th>
                       <th>Uploaded On</th>

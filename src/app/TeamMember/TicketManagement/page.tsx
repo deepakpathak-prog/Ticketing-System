@@ -9,12 +9,12 @@ import TableThree from "../../../Components/common/TableThree"
 
 const CustomerOne= () => {
   const handleSearch = () => {
-    // Implement your search logic here
+    
     console.log('Search clicked');
   };
 
   const handleExport = () => {
-    // Implement your export logic here
+  
     console.log('Export clicked');
   };
   return (
