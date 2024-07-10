@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Button } from "@headlessui/react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Loader from "@/Components/common/Loader";
 
 export default function Page() {
   const [ticketType, setTicketType] = useState("Select Ticket Type");
@@ -24,6 +25,8 @@ export default function Page() {
     subject: false,
     requestDetails: false,
   });
+
+  const [loading, setLoading] = useState(false);
 
   const handleTicketTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTicketType(e.target.value);
@@ -109,33 +112,36 @@ export default function Page() {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
+      setLoading(true);
       const formData = new FormData();
       formData.append("ticket_type", ticketType);
       formData.append("priority", priority);
       formData.append("subject", subject);
       formData.append("details", requestDetails);
 
-      console.log({selectedFiles});
-      
+      console.log({ selectedFiles });
+
       selectedFiles.forEach((file) => formData.append("files", file));
 
-      // try {
-      //   const response = await axios.post(
-      //     "http://localhost:8000/addNewTicket",
-      //     formData,
-      //     {
-      //       headers: {
-      //         "Content-Type": "multipart/form-data",
-      //         Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust as needed
-      //       },
-      //     }
-      //   );
-      //   toast.success("New Ticket Added Successfully");
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/addNewTicket",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // Adjust as needed
+            },
+          }
+        );
+        toast.success("New Ticket Added Successfully");
 
-      //   handleCancel();
-      // } catch (error) {
-      //   console.error("Error adding new ticket:", error);
-      // }
+        handleCancel();
+      } catch (error) {
+        console.error("Error adding new ticket:", error);
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -338,7 +344,12 @@ export default function Page() {
             </div>
           </div>
         </form>
+        {loading && (
+          <Loader />
+        )}
       </div>
     </div>
   );
 }
+
+

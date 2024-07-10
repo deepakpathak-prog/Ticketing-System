@@ -11,6 +11,8 @@ import toast, { Toaster } from "react-hot-toast";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import { File } from "buffer";
+import Loader from "./Loader";
+
 
 type FormInputs = {
   customerName: string;
@@ -29,6 +31,7 @@ type FormInputs = {
 interface UserDetailsResponse {
   user: {
     email: string;
+    customer_name: string;
   };
 }
 
@@ -36,7 +39,9 @@ const AccountDetailsForm: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const [loading, setLoading] = useState(false)
   const [userEmail, setUserEmail] = useState("");
+  const [customername, setCustomerName] = useState("");
   const [profileImage, setProfileImage] = useState<File>();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
@@ -55,6 +60,8 @@ const AccountDetailsForm: React.FC = () => {
 
   const fetchUserDetails = async () => {
     try {
+      
+
       const response = await axios.get<UserDetailsResponse>(
         "http://localhost:8000/getUserDetails",
         {
@@ -65,6 +72,7 @@ const AccountDetailsForm: React.FC = () => {
       );
       if (response) {
         setUserEmail(response.data.user.email);
+        setCustomerName(response.data.user.customer_name)
       }
     } catch (error) {
       console.log(error);
@@ -124,6 +132,7 @@ const AccountDetailsForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     try {
+      setLoading(true)
       const formData = new FormData();
 
       // Append profile image if it exists
@@ -153,9 +162,12 @@ const AccountDetailsForm: React.FC = () => {
           },
         }
       );
+      setLoading(false);
+      router.push("/Dashboard")
 
       // console.log("Form submitted successfully:", response.data);
       toast.success("Account details updated successfully");
+
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Failed to update account details");
@@ -204,6 +216,7 @@ const AccountDetailsForm: React.FC = () => {
                 type="text"
                 {...register("customerName", { required: true })}
                 className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
+                placeholder={customername}
               />
               {errors.customerName && (
                 <span role="alert" className="text-red-600">
@@ -424,6 +437,9 @@ const AccountDetailsForm: React.FC = () => {
           </div>
         </div>
       </form>
+      {loading && (
+        <Loader />
+      )}
     </div>
   );
 };

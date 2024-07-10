@@ -1,6 +1,6 @@
 "use client";
-import axios from "axios";
-import React, { useEffect } from "react";
+import axios, { AxiosResponse } from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Head from "next/head";
 import Image from "next/image";
@@ -10,13 +10,23 @@ import Illustration from "../../../public/images/Illustration.svg";
 import toast, { Toaster } from "react-hot-toast";
 import logoWhite from "../../../public/images/sidebarLogo.svg";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Loader from "@/Components/common/Loader";
 // Define the interface for form data
 interface FormData {
   username: string;
   password: string;
 }
 
+interface LoginResponseData {
+  token: string;
+  onBoarded: boolean;
+}
+
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -26,19 +36,35 @@ const LoginForm = () => {
   const onSubmit = async (data: FormData) => {
     // Explicitly type the data parameter
     try {
-      const response = await axios.post("http://localhost:8000/login", {
-        email: data.username,
-        password: data.password,
-      });
+      setLoading(true)
+      const response: AxiosResponse<LoginResponseData> = await axios.post(
+        "http://localhost:8000/login",
+        {
+          email: data.username,
+          password: data.password,
+        }
+      );
 
       if (response.status === 200) {
         toast.success("Login successful!");
+        const responseData = response.data;
+        // console.log("responseData", responseData.user.onBoarded);
 
-        console.log("Login successful:", response.data);
+        if (responseData.user.onBoarded === false) {
+          console.log("Login successful:", response.data);
+          localStorage.setItem("token", response.data.token);
+          setLoading(false)
+          router.push("/AccountDetails");
+        } else {
+          console.log("Login successful:", response.data);
+          localStorage.setItem("token", response.data.token);
 
-        localStorage.setItem("token", response.data.token);
+          localStorage.setItem("token", response.data.token);
+          setLoading(false)
+          router.push("/Dashboard");
 
-        window.location.href = "/AccountDetails";
+          // window.location.href = "/AccountDetails";
+        }
       }
     } catch (error) {
       toast.error("Error logging in. Please check your credentials.");
@@ -70,7 +96,8 @@ const LoginForm = () => {
             </h1>
           </div>
           <div className="flex justify-center items-center text-white mt-14 w-[80%]">
-          Streamline your ticketing process: Efficient, intuitive, and reliable ticket management for seamless service.
+            Streamline your ticketing process: Efficient, intuitive, and
+            reliable ticket management for seamless service.
           </div>
         </div>
 
@@ -89,11 +116,12 @@ const LoginForm = () => {
                   Username <span className="text-red-500">*</span>
                 </label>
                 <input
-                  {...register('username', {
-                    required: 'Username is required',
+                  {...register("username", {
+                    required: "Username is required",
                     validate: {
                       noSpaces: (value) =>
-                        !/\s/.test(value) || 'Username should not contain spaces',
+                        !/\s/.test(value) ||
+                        "Username should not contain spaces",
                     },
                   })}
                   id="username"
@@ -115,11 +143,12 @@ const LoginForm = () => {
                   Password <span className="text-red-500">*</span>
                 </label>
                 <input
-                  {...register('password', {
-                    required: 'Password is required',
+                  {...register("password", {
+                    required: "Password is required",
                     validate: {
                       noSpaces: (value) =>
-                        !/\s/.test(value) || 'Password should not contain spaces',
+                        !/\s/.test(value) ||
+                        "Password should not contain spaces",
                     },
                   })}
                   id="password"
@@ -144,13 +173,17 @@ const LoginForm = () => {
               <div className="text-sm mt-4 flex justify-center gap-3">
                 <Link href="/reset">Forgot Password?</Link>
                 <span className="text-gray-500">|</span>
-                <Link href="/reset" className="font-bold underline">RESET PASSWORD</Link>
+                <Link href="/reset" className="font-bold underline">
+                  RESET PASSWORD
+                </Link>
               </div>
             </form>
+            {loading && (
+              <Loader />
+            )}
           </div>
         </div>
       </div>
-      
     </>
   );
 };
