@@ -169,7 +169,7 @@ const Example: React.FC = () => {
                   <div className="flex">
                     <div className="py-7 pr-10">
                       {/* <Image src={ProfilePic} alt="hhh" width={400} /> */}
-                      <Image src={Profile} alt="Profile Pic" width={400} />
+                      <Image src={ProfilePic} alt="Profile Pic" width={400} />
                     </div>
                     <div>
                       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">
