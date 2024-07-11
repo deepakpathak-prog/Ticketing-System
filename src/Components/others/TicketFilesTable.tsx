@@ -14,6 +14,7 @@ const TicketFilesTable = () => {
 
   const handleDownload = (filename: string) => {
     console.log(`Downloading ${filename}`);
+    console.log("tests")
   };
 
   return (
