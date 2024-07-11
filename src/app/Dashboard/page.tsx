@@ -75,27 +75,16 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="-z-10">
-      {/* <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
-        <div className="text-[#17192b] text-xl">Dashboard</div>
-        <div className="flex gap-4 justify-center items-center">
-          <div>
-            <Image src={Bell} alt="hhh" width={25} />
-          </div>
-          <div>
-            <Image src={userBg} alt="hhh" width={50} />
-          </div>
-        </div>
-      </div> */}
       <div>
         <Link href="/TicketManagement/NewTicket">
           <ButtonPurple />
         </Link>
       </div>
-      <div className="ml-8 mr-8 shadow-lg rounded-md">
-        <h1 className="text-3xl p-7 text-[#2A2C3E]">Summary</h1>
-        <div className="grid grid-cols-3 gap-5 mr-7">
-          <div className="bg-[#F7F7F7] p-8 rounded-md ml-7 mb-7">
-            <div className="grid grid-cols-2 pb-10">
+      <div className="mx-5 lg:mx-8 shadow-lg rounded-md">
+        <h1 className="text-3xl p-5 lg:p-7 text-[#2A2C3E]">Summary</h1>
+        <div className="lg:grid grid-cols-3 gap-5 mr-7 pb-5 lg:pb-0">
+          <div className="bg-[#F7F7F7] p-5 lg:p-8 rounded-md ml-5 lg:ml-7 mb-7">
+            <div className="grid grid-cols-2 pb-5 lg:pb-10">
               <div>
                 <Image src={Circle} alt="hhh" width={90} />
               </div>
@@ -109,8 +98,8 @@ const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-[#F7F7F7] p-8 rounded-md ml-7 mb-7">
-            <div className="grid grid-cols-2 pb-10">
+          <div className="bg-[#F7F7F7] p-8 rounded-md ml-5 lg:ml-7 mb-7">
+            <div className="grid grid-cols-2 pb-5 lg:pb-10">
               <div>
                 <Image src={Circle} alt="hhh" width={90} />
               </div>
@@ -124,8 +113,8 @@ const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="bg-[#F7F7F7] p-8 rounded-md ml-7 mb-7">
-            <div className="grid grid-cols-2 pb-10">
+          <div className="bg-[#F7F7F7] p-8 rounded-md ml-5 lg:ml-7 mb-7">
+            <div className="grid grid-cols-2 pb-5 lg:pb-10">
               <div>
                 <Image src={Circle} alt="hhh" width={90} />
               </div>
@@ -140,14 +129,14 @@ const DashboardPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="m-8 flex flex-col gap-5">
-        <div className="flex p-7 justify-between">
-          <div className="text-3xl text-[#2A2C3E]">Recent Tickets</div>
-          <div className="text-2xl text-[#696969] flex gap-3 justify-center items-center">
+      <div className=" m-5 lg:m-8 flex flex-col gap-5">
+        <div className="flex py-5 lg:p-7 justify-between">
+          <div className="text-xl lg:text-3xl text-[#2A2C3E]">Recent Tickets</div>
+          <div className="text-base lg:text-2xl text-[#696969] flex gap-3 justify-center items-center">
             <div>
               <Link href="/TicketManagement">View All Tickets </Link>
             </div>
-            <div>
+            <div className='hidden lg:block'>
               <Link href="#">
                 <Image src={Arrow} alt="hhh" width={28} />
               </Link>

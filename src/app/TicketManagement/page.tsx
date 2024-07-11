@@ -95,16 +95,16 @@ export default function Page() {
         </div>
       </div> */}
 
-      <div className="flex justify-between items-center mt-10 ml-8 mr-8">
+      <div className="lg:flex justify-between items-center mt-5 lg:mt-10 lg:mx-8 mx-5">
         <div>
-          <h1 className="text-3xl text-[#2A2C3E]">Tickets</h1>
+          <h1 className="text-3xl text-[#2A2C3E] mb-7 lg:mg-0">Tickets</h1>
         </div>
-        <div className="flex justify-around items-center gap-2">
+        <div className="lg:flex justify-around items-center gap-2">
           <div>
             <SearchBar />
           </div>
           <div>
-            <Button className="flex rounded bg-white py-2 px-4 text-sm text-[#5027D9] items-center gap-2 border-2 border-[#5027D9]">
+            <Button className="flex rounded bg-white py-2 px-4 text-sm text-[#5027D9] items-center gap-2 border-2 border-[#5027D9] my-3 lg:my-0">
               <Image src={Folder} alt="Folder Icon" width={22} height={22} />
               Export report
             </Button>
