@@ -142,9 +142,9 @@ export default function Page() {
   };
 
   return (
-    <div className="">
+    <div>
       <Toaster />
-      <div className="flex items-center justify-between shadow-md p-8 sticky top-0 z-50 bg-white">
+      {/* <div className="flex items-center justify-between shadow-md p-8 sticky top-0 z-50 bg-white">
         <div className="flex items-center gap-3">
           <div className="text-[#2A2C3E] text-xl">
             <Link href="/TicketManagement">Ticket Management </Link>
@@ -166,15 +166,15 @@ export default function Page() {
             <Image src={userBg} alt="User" width={50} />
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className="p-10 mx-10 my-12 bg-[#F9F9F9] rounded-md h-full shadow-md">
+      <div className="px-3 py-4 lg:p-7 mx-5 my-8 bg-[#F9F9F9] lg:rounded-md h-full shadow-md">
         <div className="text-[#2A2C3E] text-2xl mb-6">New Ticket</div>
 
         <form className="space-y-6" onSubmit={handleFormSubmit}>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="">
-              <label htmlFor="ticketType" className="block text-[#5E626C] pb-2">
+          <div className="lg:grid lg:grid-cols-2 gap-3">
+            <div>
+              <label htmlFor="ticketType" className="block text-[#5E626C] pb-2 pt-3 lg:pt-0">
                 Ticket Type <span className="text-red-600 text-md">*</span>
               </label>
               <div className="flex items-center border border-gray-300 bg-white rounded-md">
@@ -204,7 +204,7 @@ export default function Page() {
             </div>
 
             <div className="">
-              <label htmlFor="priority" className="block text-[#5E626C] pb-2">
+              <label htmlFor="priority" className="block text-[#5E626C] pb-2 pt-3 lg:pt-0">
                 Priority <span className="text-red-600 text-md">*</span>
               </label>
               <div className="flex items-center border border-gray-300 bg-white rounded-md">
@@ -281,7 +281,7 @@ export default function Page() {
             )}
           </div>
 
-          <div className="rounded-md bg-[#F0ECFB] p-8">
+          <div className="rounded-md bg-[#F0ECFB] lg:p-8 p-3">
             <div className="flex justify-between items-center ">
               <div>
                 <h1 className="text-md font-medium text-lg">Attach files</h1>
@@ -315,20 +315,20 @@ export default function Page() {
                 {selectedFiles.length > 0 && (
                   <div>
                     <h2 className="text-md font-medium text-lg"></h2>
-                    <div className="grid grid-cols-3 gap-8">
+                    <div className="lg:grid lg:grid-cols-3 gap-8">
                       {selectedFiles.map((file, index) => (
                         <div
                           key={index}
-                          className="flex justify-between items-center bg-white border-2 border-[#D9D9D9] rounded-xl shadow-md "
+                          className="flex justify-between items-center bg-white border-2 border-[#D9D9D9] rounded-xl shadow-md mb-3"
                         >
-                          <span className="text-black text-sm py-4 px-3 ">
+                          <span className="text-black text-sm py-3 px-2 lg:py-4 lg:px-3">
                             {file.name}
                           </span>
                           
                           <button
                             type="button"
                             onClick={() => handleFileDelete(index)}
-                            className="bg-[#5027D9] rounded-r-md border-r py-4 px-3"
+                            className="bg-[#5027D9] rounded-r-md border-r lg:py-4 lg:px-3 py-3 px-2"
                           >
                             <Image src={Delete} alt="delete" width={25}/>
                           </button>
@@ -342,7 +342,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-          <div className="flex gap-5 justify-end">
+          <div className="flex gap-5 lg:justify-end">
             <div>
               <Button
                 type="button"

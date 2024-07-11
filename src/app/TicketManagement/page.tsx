@@ -83,7 +83,7 @@ export default function Page() {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
+      {/* <div className="flex justify-between items-center shadow-md p-8 sticky top-0 z-50 bg-white">
         <div className="text-[#2A2C3E] text-xl">Ticket Management</div>
         <div className="flex gap-4 justify-center items-center">
           <div>
@@ -93,7 +93,7 @@ export default function Page() {
             <Image src={userBg} alt="User" width={50} />
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex justify-between items-center mt-10 ml-8 mr-8">
         <div>
