@@ -5,8 +5,8 @@ import Image from 'next/image'
 
 const ButtonPurple = () => {
     return (
-        <div className='flex justify-end p-8'>
-            <Button className="flex rounded bg-[#5027D9] py-2 px-4 text-sm text-white items-center gap-2">
+        <div className='lg:flex lg:justify-end p-5 lg:p-8'>
+            <Button className="flex rounded bg-[#5027D9] py-2 px-4 text-sm text-white items-center gap-2 w-full lg:w-max justify-center">
                 <Image
                 src={Plus}
                 alt="add"
