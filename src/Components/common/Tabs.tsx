@@ -12,6 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 import AccountDetailsForm from "./AccountDetailsFrom";
 import { Button } from "@headlessui/react";
 import MemberManagementTable from "../common/MemberManagementTable"
+
 // Define types for form inputs
 type FormInputs = {
   email: string;
@@ -54,7 +55,7 @@ const WorkDomainInput: React.FC<WorkDomainInputProps> = ({ register, errors }) =
   };
 
   return (
-    <div className="w-full px-2">
+    <div className="w-full lg:px-2">
       <label htmlFor="workDomain" className="block mt-6">
         Work Domain
       </label>
@@ -62,7 +63,7 @@ const WorkDomainInput: React.FC<WorkDomainInputProps> = ({ register, errors }) =
         {workDomains.map((domain, index) => (
           <span
             key={index}
-            className="inline-block bg-[#E8E3FA] rounded-full pl-5 pr-7 py-3 text-sm  text-black mr-2 mb-2 "
+            className="inline-block bg-[#E8E3FA] rounded-full lg:pl-5 lg:pr-7 lg:py-3 py-2 pl-3 pr-5 text-sm  text-black mr-2 mb-2 "
           >
             {domain}
             <button
@@ -156,26 +157,29 @@ const Example: React.FC = () => {
             {categories.map(({ name }) => (
               <Tab
                 key={name}
-                className="py-1 px-3 text-[#9291A5] focus:outline-none focus:border-b-4 focus:border-[#5027D9] focus:text-[#5027D9] data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-none"
+                className="py-1 px-2 lg:px-3 text-[#9291A5] focus:outline-none focus:border-b-4 focus:border-[#5027D9] focus:text-[#5027D9] data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-none text-xs"
               >
                 {name}
               </Tab>
             ))}
           </TabList>
-          <TabPanels className="m-5">
+          <TabPanels className="lg:m-5 mt-5">
             {categories.map(({ name }) => (
               <TabPanel key={name}>
+                
                 {name === "Edit Profile" && (
-                  <div className="flex">
-                    <div className="py-7 pr-10">
+                  
+                  <div className="lg:flex">
+                    <div className="text-base lg:text-xl font-medium">Basic details</div>
+                    <div className="lg:py-7 pt-7 lg:pr-10 pr-52">
                       {/* <Image src={ProfilePic} alt="hhh" width={400} /> */}
                       <Image src={ProfilePic} alt="Profile Pic" width={400} />
                     </div>
                     <div>
                       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">
-                        <div className="flex flex-wrap -mx-2">
-                          <div className="w-1/2 px-2 ">
-                            <label htmlFor="companyName" className="block mt-3">
+                        <div className="lg:flex lg:flex-wrap -mx-2">
+                          <div className="lg:w-1/2 px-2 ">
+                            <label htmlFor="companyName" className="block mt-3 lg:text-base text-sm">
                               Company Name
                             </label>
                             <input
@@ -190,8 +194,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="email" className="block mt-3">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="email" className="block mt-3 lg:text-base text-sm">
                               Email
                             </label>
                             <input
@@ -206,8 +210,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="phoneNumber" className="block mt-6">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="phoneNumber" className="block mt-6 lg:text-base text-sm">
                               Phone Number
                             </label>
                             <input
@@ -222,8 +226,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="companyUrl" className="block mt-6">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="companyUrl" className="block mt-6 lg:text-base text-sm">
                               Company URL
                             </label>
                             <input
@@ -238,8 +242,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="companyAddress" className="block mt-6">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="companyAddress" className="block mt-6 lg:text-base text-sm">
                               Company Address
                             </label>
                             <input
@@ -254,8 +258,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="city" className="block mt-6">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="city" className="block mt-6 lg:text-base text-sm">
                               City
                             </label>
                             <input
@@ -270,8 +274,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="country" className="block mt-6">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="country" className="block mt-6 lg:text-base text-sm">
                               Country
                             </label>
                             <input
@@ -286,8 +290,8 @@ const Example: React.FC = () => {
                               </span>
                             )}
                           </div>
-                          <div className="w-1/2 px-2">
-                            <label htmlFor="postalCode" className="block mt-6">
+                          <div className="lg:w-1/2 px-2">
+                            <label htmlFor="postalCode" className="block mt-6 lg:text-base text-sm">
                               Postal Code
                             </label>
                             <input
@@ -303,8 +307,8 @@ const Example: React.FC = () => {
                             )}
                           </div>
                         </div>
-                        <div className="w-full px-2">
-                          <label htmlFor="aboutCompany" className="block mt-6">
+                        <div className="w-full lg:px-2">
+                          <label htmlFor="aboutCompany" className="block mt-6 lg:text-base text-sm">
                             About Company
                           </label>
                           <textarea
@@ -319,10 +323,10 @@ const Example: React.FC = () => {
                           )}
                         </div>
                         <WorkDomainInput register={register} errors={errors} />
-                        <div className="flex justify-end w-full mt-6">
+                        <div className="flex lg:justify-end justify-center w-full mt-6">
                           <button
                             type="submit"
-                            className="btn-submit ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
+                            className="btn-submit lg:ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
                           >
                             Save details
                           </button>
@@ -340,11 +344,12 @@ const Example: React.FC = () => {
                   </div>
                 )}
                 {name === "Security" && (
-                  <div className="w-[50%] bg-white p-5 rounded-md">
+                  <div className="lg:w-[50%] bg-white lg:p-5 p-3 rounded-md">
+                    <div className="text-base lg:text-xl font-medium text-[#343A69]">Change Password</div>
                     <form onSubmit={handleSubmitSecurity(onSubmitSecurity)} className="space-y-4 p-2">
                       <div className="flex flex-wrap -mx-2">
                         <div className="w-full px-2">
-                          <label htmlFor="currentPassword" className="block mt-6">
+                          <label htmlFor="currentPassword" className="block mt-6 lg:text-base text-sm text-[#6E6E6E]">
                             Current Password <span className="text-red-600">*</span>
                           </label>
                           <input
@@ -360,7 +365,7 @@ const Example: React.FC = () => {
                           )}
                         </div>
                         <div className="w-full px-2">
-                          <label htmlFor="newPassword" className="block mt-6">
+                          <label htmlFor="newPassword" className="block mt-6 lg:text-base text-sm text-[#6E6E6E]">
                             New Password  <span className="text-red-600">*</span>
                           </label>
                           <input
@@ -376,10 +381,10 @@ const Example: React.FC = () => {
                           )}
                         </div>
                       </div>
-                      <div className="flex justify-end w-full  p-3">
+                      <div className="flex justify-start lg:justify-end w-full  lg:p-3">
                         <button
                           type="submit"
-                          className="btn-submit ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
+                          className="btn-submit lg:ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
                         >
                           Save changes
                         </button>

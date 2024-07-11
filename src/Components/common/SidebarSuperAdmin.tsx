@@ -23,9 +23,9 @@ const Sidebar = () => {
             </div>
 
             <div className='flex flex-col gap-5'>
-                <div className='flex gap-3 text-white pt-3 pb-3 pl-4 w-[90%] rounded-md hover:bg-[#5027D9]'><Image src={dashboardGrp} alt="dashboard"/><Link href="/Dashboard">Dashboards</Link></div>
+                <div className='flex gap-3 text-white pt-3 pb-3 pl-4 w-[90%] rounded-md hover:bg-[#5027D9]'><Image src={dashboardGrp} alt="dashboard"/><Link href="/SuperAdmin">Dashboard</Link></div>
                 <div className='flex gap-3 text-white pt-3 pb-3 pl-3 w-[90%] rounded-md hover:bg-[#5027D9]'><Image src={ticketmanagementgrp} alt="dashboard"/><Link href="/TicketManagement">Ticket Management</Link></div>
-                <div className='flex gap-3 text-white pt-3 pb-3 pl-3 w-[90%] rounded-md hover:bg-[#5027D9]'><Image src={ticketmanagementgrp} alt="dashboard"/><Link href="/Settings">Settings</Link></div>
+                <div className='flex gap-3 text-white pt-3 pb-3 pl-3 w-[90%] rounded-md hover:bg-[#5027D9]'><Image src={ticketmanagementgrp} alt="dashboard"/><Link href="/SuperAdmin/Settings">Settings</Link></div>
                 <div className='flex gap-3 text-white pt-3 pb-3 pl-4 w-[90%] rounded-md hover:bg-[#5027D9]'><Image src={profileGrp} alt="dashboard"/><Link href="/Profile">Profile</Link></div>
 
             </div>
