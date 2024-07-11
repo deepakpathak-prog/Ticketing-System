@@ -13,6 +13,7 @@ import { useRouter, usePathname } from "next/navigation";
 
 
 const Page: React.FC = () => {
+
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [ticketId, setTicketId] = useState("");
   const [ticketType, setTicketType] = useState("");
@@ -68,15 +69,9 @@ const Page: React.FC = () => {
     }
   };
 
-  const files = [
-    { filename: 'Document1.pdf', uploadedOn: '2024-07-09' },
-    { filename: 'Spreadsheet.xlsx', uploadedOn: '2024-07-08' },
-    { filename: 'Presentation.pptx', uploadedOn: '2024-07-07' }
-  ];
 
-  const handleDownload = (filename: string) => {
-    console.log(`Downloading ${filename}`);
-  };
+
+
 
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
@@ -100,6 +95,28 @@ const Page: React.FC = () => {
       default:
         return "text-gray-600";
     }
+  };
+
+
+  // Render section Script for rendering html to normal
+  const renderSections = (content: string) => {
+    
+    const sections = content.split(/<\/?h[1-6]>/g);
+    return sections.map((section, index) => (
+      
+      <div key={index}>
+        {section.startsWith("<h") ? (
+          
+          <h2
+            className="my-4 text-lg font-medium"
+            dangerouslySetInnerHTML={{ __html: section }}
+          />
+        ) : (
+          
+          <p dangerouslySetInnerHTML={{ __html: section }} />
+        )}
+      </div>
+    ));
   };
 
   return (
@@ -207,7 +224,7 @@ const Page: React.FC = () => {
         <div className="">
           <div className="text-base font-medium pb-2">Request Details</div>
           <div>
-            <p className="text-sm text-[#7d7d7d] font-light">{description}</p>
+            <p className="text-sm text-[#7d7d7d] font-light">{renderSections(description)}</p>
           </div>
         </div>
       </div>
@@ -238,34 +255,13 @@ const Page: React.FC = () => {
               Comments content goes here.
             </TabPanel>
             <TabPanel className="p-10 bg-white">
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Filename</th>
-                      <th>Uploaded On</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {files.map((file, index) => (
-                      <tr key={index}>
-                        <td>{file.filename}</td>
-                        <td>{file.uploadedOn}</td>
-                        <td>
-                          <button onClick={() => handleDownload(file.filename)}>
-                            Download
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              
             </TabPanel>
           </TabPanels>
         </TabGroup>
       </div>
+
+
     </div>
   );
 };
