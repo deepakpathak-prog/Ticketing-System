@@ -9,11 +9,15 @@ import Bell from "../../../../../public/images/bell.svg";
 import userBg from "../../../../../public/images/User.svg";
 import axios, { AxiosResponse } from "axios";
 import { useRouter, usePathname } from "next/navigation";
-// import TicketFilesTable from "../../../../Components/others/ticketFilesTable";
+import addticket from "../../../../../public/images/add.svg";
 
+interface UploadedFile {
+  filename: string;
+  fileUrl: string;
+  uploadedOn: string;
+}
 
 const Page: React.FC = () => {
-
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [ticketId, setTicketId] = useState("");
   const [ticketType, setTicketType] = useState("");
@@ -25,6 +29,8 @@ const Page: React.FC = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
 
   const router = useRouter();
   const pathname = usePathname();
@@ -63,15 +69,42 @@ const Page: React.FC = () => {
         setRaisedBy(user.customer_name);
         setSubject(ticketDetails.subject);
         setDescription(ticketDetails.details);
+
+        const uploadedFiles = ticketDetails.details_images_url.map(
+          (url: string) => {
+            const filename = url.split("/").pop();
+            const uploadedOn = new Date(
+              ticketDetails.createdAt
+            ).toLocaleDateString();
+            return { filename, fileUrl: url, uploadedOn };
+          }
+        );
+
+        setUploadedFiles(uploadedFiles);
       }
     } catch (error) {
       console.error("Error fetching tickets:", error);
     }
   };
 
-
-
-
+  const downloadFile = (url: string, filename: string) => {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/octet-stream",
+      },
+    })
+      .then((response) => response.blob())
+      .then((blob) => {
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      })
+      .catch((error) => console.error("Download error:", error));
+  };
 
   const getPriorityColor = (priority: string) => {
     switch (priority.toLowerCase()) {
@@ -97,22 +130,17 @@ const Page: React.FC = () => {
     }
   };
 
-
   // Render section Script for rendering html to normal
   const renderSections = (content: string) => {
-    
     const sections = content.split(/<\/?h[1-6]>/g);
     return sections.map((section, index) => (
-      
       <div key={index}>
         {section.startsWith("<h") ? (
-          
           <h2
             className="my-4 text-lg font-medium"
             dangerouslySetInnerHTML={{ __html: section }}
           />
         ) : (
-          
           <p dangerouslySetInnerHTML={{ __html: section }} />
         )}
       </div>
@@ -224,7 +252,9 @@ const Page: React.FC = () => {
         <div className="">
           <div className="text-base font-medium pb-2">Request Details</div>
           <div>
-            <p className="text-sm text-[#7d7d7d] font-light">{renderSections(description)}</p>
+            <p className="text-sm text-[#7d7d7d] font-light">
+              {renderSections(description)}
+            </p>
           </div>
         </div>
       </div>
@@ -251,17 +281,64 @@ const Page: React.FC = () => {
               Events content goes here.
             </TabPanel>
 
-            <TabPanel className="p-10 bg-white">
-              Comments content goes here.
-            </TabPanel>
-            <TabPanel className="p-10 bg-white">
-              
+            <TabPanel className="p-7 bg-white"></TabPanel>
+            <TabPanel className="p-7 bg-white">
+              <div className="flex justify-between items-center mb-4">
+                <div className="font-semibold">All Uploaded Files</div>
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <div>
+                    <Image src={addticket} alt="Add new" width={20} />
+                  </div>
+                  <div className="text-[#5027D9] text-lg">Add new</div>
+                </div>
+              </div>
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Filename
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Uploaded On
+                    </th>
+                    <th scope="col" className="relative px-6 py-3">
+                      <span className="sr-only">Download</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {uploadedFiles.map((file, index) => (
+                    <tr key={index}>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {file.filename}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {file.uploadedOn}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button
+                          onClick={() =>
+                            downloadFile(file.fileUrl, file.filename)
+                          }
+                          className="text-[#5027D9] hover:text-[#5027D9] underline"
+                        >
+                          Download
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </TabPanel>
           </TabPanels>
         </TabGroup>
       </div>
-
-
     </div>
   );
 };
