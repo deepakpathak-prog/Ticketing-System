@@ -4,15 +4,12 @@ import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import Image from "next/image";
-import ProfilePic from "../../../public/images/Profile.svg";
-import Close from "../../../public/images/closebutton.svg";
+import Profile from "../../../public/images/Profile.svg";
+import Close from "../../../public/images/close.svg";
 import toast, { Toaster } from "react-hot-toast";
 
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
-import { File } from "buffer";
-import Loader from "./Loader";
-
 
 type FormInputs = {
   customerName: string;
@@ -25,13 +22,11 @@ type FormInputs = {
   postalCode: string;
   aboutCompany: string;
   workDomain: string;
-  profileImage: File | null;
 };
 
 interface UserDetailsResponse {
   user: {
     email: string;
-    customer_name: string;
   };
 }
 
@@ -39,29 +34,14 @@ const AccountDetailsForm: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [loading, setLoading] = useState(false)
+
   const [userEmail, setUserEmail] = useState("");
-  const [customername, setCustomerName] = useState("");
-  const [profileImage, setProfileImage] = useState<File>();
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
-
-  const handleProfileImageChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setProfileImage(file);
-    }
-  };
-
   useEffect(() => {
     fetchUserDetails();
   }, []);
 
   const fetchUserDetails = async () => {
     try {
-      
-
       const response = await axios.get<UserDetailsResponse>(
         "http://localhost:8000/getUserDetails",
         {
@@ -72,7 +52,6 @@ const AccountDetailsForm: React.FC = () => {
       );
       if (response) {
         setUserEmail(response.data.user.email);
-        setCustomerName(response.data.user.customer_name)
       }
     } catch (error) {
       console.log(error);
@@ -93,7 +72,7 @@ const AccountDetailsForm: React.FC = () => {
         className="btn-submit ml-auto block rounded bg-[#5027D9] py-4 px-14 text-sm text-white"
       >
         Next
-      </button>
+      </button> 
     ) : (
       <button
         type="submit"
@@ -131,46 +110,35 @@ const AccountDetailsForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    console.log("Form data:", data); // Log form data to console
     try {
-      setLoading(true)
-      const formData = new FormData();
-
-      // Append profile image if it exists
-      if (profileImage) {
-       formData.append("files", profileImage)
-      }
-
-      // Append other form data
-      formData.append("customer_name", data.customerName);
-      formData.append("company_legal_name", data.companyName);
-      formData.append("company_url", data.companyUrl);
-      formData.append("phone_number", data.phoneNumber.toString());
-      formData.append("address", data.companyAddress);
-      formData.append("postal_code", data.postalCode);
-      formData.append("country", data.country);
-      formData.append("city", data.city);
-      formData.append("about_company", data.aboutCompany);
-      formData.append("work_domain", data.workDomain);
-
-      const response = await axios.put(
-        "http://localhost:8000/updateAccountDetails",
-        formData,
+      const response = await axios.post(
+        "http://localhost:8000/addAccountDetails",
+        {
+          customer_name: data.customerName,
+          company_legal_name: data.companyName,
+          company_url: data.companyUrl,
+          phone_number: data.phoneNumber,
+          address: data.companyAddress,
+          postal_code: data.postalCode,
+          country: data.country,
+          city: data.city,
+          about_company: data.aboutCompany,
+          work_domain: data.workDomain,
+        },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you store token in localStorage
           },
         }
       );
-      setLoading(false);
-      router.push("/Dashboard")
 
-      // console.log("Form submitted successfully:", response.data);
-      toast.success("Account details updated successfully");
+      console.log("Form submitted successfully:", response.data);
+      toast.success("Account details added successfully");
 
+      router.push("/Dashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Failed to update account details");
     }
   };
 
@@ -181,31 +149,8 @@ const AccountDetailsForm: React.FC = () => {
         <div className="text-xl font-semibold">Basic Details</div>
         <div className="flex py-5 items-center">
           <div className="w-[20%]">
-            <div className="relative w-20 h-20 rounded-full overflow-hidden cursor-pointer">
-              <Image
-                src={
-                  profileImage ? URL.createObjectURL(profileImage) : ProfilePic
-                }
-                alt="Profile Pic"
-                layout="fill"
-                objectFit="cover"
-                onClick={() => {
-                  const uploadInput = document.getElementById("uploadImage");
-                  if (uploadInput) {
-                    uploadInput.click();
-                  }
-                }}
-              />
-            </div>
-            <input
-              id="uploadImage"
-              type="file"
-              accept="image/*"
-              onChange={handleProfileImageChange}
-              className="hidden"
-            />
+            <Image src={Profile} alt="Profile Pic" className="pr-3" />
           </div>
-
           <div className="grid grid-cols-2 gap-4 w-full">
             <div>
               <label htmlFor="customerName" className="block text-sm">
@@ -216,7 +161,6 @@ const AccountDetailsForm: React.FC = () => {
                 type="text"
                 {...register("customerName", { required: true })}
                 className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                placeholder={customername}
               />
               {errors.customerName && (
                 <span role="alert" className="text-red-600">
@@ -437,9 +381,6 @@ const AccountDetailsForm: React.FC = () => {
           </div>
         </div>
       </form>
-      {loading && (
-        <Loader />
-      )}
     </div>
   );
 };
