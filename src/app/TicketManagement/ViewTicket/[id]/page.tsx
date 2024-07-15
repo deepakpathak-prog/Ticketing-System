@@ -178,103 +178,103 @@ const Page: React.FC = () => {
 
   return (
     <div className="">
-      <div className="bg-[#F9F9F9] p-7 m-10 rounded-md">
-        <div className="flex justify-between items-center">
-          <div className="text-[#2A2C3E] text-2xl mb-6">View Ticket</div>
+      <div className="bg-[#F9F9F9] p-5 lg:p-7 m-5 lg:m-7 rounded-md">
+        <div className="flex justify-between items-center mb-6 lg:mb-0">
+          <div className="text-[#2A2C3E] text-2xl lg:mb-6">View Ticket</div>
           <div>
-            <Button className="flex rounded bg-[#5027D9] py-2 px-12 text-sm text-white items-center gap-2">
+            <Button className="flex rounded bg-[#5027D9] py-3 px-12 lg:py-2 lg:px-12 text-sm text-white items-center gap-2">
               Edit
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-3 py-5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 py-5">
           <div className="pb-5">
-            <div className="text-base font-medium">Ticket ID</div>
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Ticket ID</div>
             <div>
-              <p className="text-base py-5 text-[#7D7D7D]">{ticketId}</p>
+              <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{ticketId}</p>
             </div>
           </div>
 
           <div className="pb-5">
-            <div className="text-base font-medium">Ticket Type</div>
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Ticket Type</div>
             <div>
-              <p className="text-base py-5 text-[#7D7D7D]">{ticketType}</p>
+              <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{ticketType}</p>
             </div>
           </div>
 
           <div className="pb-5">
-            <div className="text-base font-medium">Created On</div>
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Created On</div>
             <div>
-              <p className="text-base py-5 text-[#7D7D7D]">{createdOn}</p>
+              <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{createdOn}</p>
             </div>
           </div>
 
           <div className="pb-5">
-            <div className="text-base font-medium">Priority</div>
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Priority</div>
             <div>
-              <p className={`text-base py-5 ${getPriorityColor(priority)}`}>
+              <p className={`text-sm lg:text-base py-5 ${getPriorityColor(priority)}`}>
                 {priority}
               </p>
             </div>
           </div>
 
           <div className="pb-5">
-            <div className="text-base font-medium">Status</div>
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Status</div>
             <div>
-              <p className={`text-base py-5 ${getStatusColor(status)}`}>
+              <p className={`text-sm lg:text-base py-5 ${getStatusColor(status)}`}>
                 {status}
               </p>
             </div>
           </div>
 
           <div className="pb-5">
-            <div className="text-base font-medium">
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">
               Total Hours Logged on Tickets
             </div>
             <div>
-              <p className="text-base py-5 text-[#7D7D7D]">{totalHours}</p>
+              <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{totalHours}</p>
             </div>
           </div>
 
           <div className="">
-            <div className="text-base font-medium">Raised By</div>
+            <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Raised By</div>
             <div>
               <p className="text-base py-5 text-[#7D7D7D]">{raisedBy}</p>
             </div>
           </div>
 
           <div className="">
-            <div className="text-base font-medium">Assigned To</div>
+            <div className="text-sm lg:text-base lg:font-medium text-[#9A9A9A]">Assigned To</div>
             <div>
-              <p className="text-base py-5 text-[#7D7D7D]">{assignedTo}</p>
+              <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{assignedTo}</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-[#F9F9F9] p-7 m-10 rounded-md">
+      <div className="bg-[#F9F9F9] p-5 lg:p-7 m-5 lg:m-7 rounded-md">
         <div className="pb-10">
-          <div className="text-base font-medium pb-2">Subject</div>
+          <div className="text-sm lg:text-base lg:font-medium text-[#9A9A9A] pb-2">Subject</div>
           <div>
             <p className="text-sm text-[#7d7d7d] font-light">{subject}</p>
           </div>
         </div>
 
         <div className="">
-          <div className="text-base font-medium pb-2">Request Details</div>
+          <div className="text-sm lg:text-base lg:font-medium text-[#9A9A9A] font-medium pb-2">Request Details</div>
           <div>
             <p className="text-sm text-[#7d7d7d] font-light">{description}</p>
           </div>
         </div>
       </div>
 
-      <div className="m-10 rounded-md">
-        <div className="p-7 bg-[#F9F9F9] text-base font-medium rounded-md">
+      <div className="m-5 lg:m-7 rounded-md border">
+        <div className=" p-5 lg:p-7 bg-[#F9F9F9] text-base font-medium rounded-md">
           Activity
         </div>
 
         <TabGroup selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-          <TabList className="flex space-x-1 bg-white p-3 px-7 cursor-pointer">
+          <TabList className="flex space-x-1 bg-white py-2 lg:p-3 lg:px-7 cursor-pointer">
             <Tab as="div" className={tabClasses}>
               Events Timeline
             </Tab>
@@ -286,7 +286,7 @@ const Page: React.FC = () => {
             </Tab>
           </TabList>
           <TabPanels>
-            <TabPanel className="px-10 py-5 bg-white">
+            <TabPanel className=" px-5 lg:px-10 py-5 bg-white">
               {events.map((event, index) => (
                 <span key={index} className="text-[#535353] pb-5">
                   <li className="list-none relative pl-4">
@@ -306,7 +306,7 @@ const Page: React.FC = () => {
               ))}
             </TabPanel>
 
-            <TabPanel className="p-7 bg-white">
+            <TabPanel className="p-5 lg:p-7 bg-white">
               <div>
                 {comments.map((comment, index) => (
                   <div
@@ -352,14 +352,14 @@ const Page: React.FC = () => {
                   </div>
                 ))}
               </div>
-              <div className="flex items-end justify-between mt-10 border rounded p-1">
-                <div className="w-full mr-2">
+              <div className="flex items-end justify-between lg:mt-10 border rounded p-1 ">
+                <div className="w-full mr-2 m-auto">
                   <input
                     type="text"
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
                     placeholder="Add a comment"
-                    className="w-full p-4 focus:outline-none"
+                    className="w-full lg:p-4 focus:outline-none "
                   />
 
                   {attachments.length > 0 && (
@@ -391,7 +391,7 @@ const Page: React.FC = () => {
                     />
                     <label htmlFor="attachment" className="cursor-pointer">
                       <button
-                        className="bg-white text-white p-4 rounded-md border-[#5027D9] border"
+                        className="bg-white text-white lg:p-4 rounded-md border-[#5027D9] border"
                         onClick={handleAddAttachment}
                       >
                         <Image src={sendAttachment} alt="" width={25} />
