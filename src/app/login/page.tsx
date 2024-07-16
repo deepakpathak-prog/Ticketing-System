@@ -39,9 +39,9 @@ const LoginForm = () => {
 
         // Redirect based on onBoarded status
         if (response.data.user.onBoarded) {
-          router.push('/dashboard');
+          router.push('/team/ManagerDashboard');
         } else {
-          router.push('/account');
+          router.push('/AccountDetails');
         }
       }
     } catch (error) {
