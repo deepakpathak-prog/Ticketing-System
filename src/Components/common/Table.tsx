@@ -25,6 +25,9 @@ type TableProps = {
 };
 
 const Table: React.FC<TableProps> = ({ tickets }) => {
+
+  console.log({tickets});
+  
   const tableHead: (keyof TableRow)[] = [
     "Ticket ID",
     "Ticket Type",
@@ -35,7 +38,7 @@ const Table: React.FC<TableProps> = ({ tickets }) => {
   ];
 
   // Map fetched tickets data to TableRow format
-  const tableData: TableRow[] = tickets.map((ticket) => ({
+  const tableData: TableRow[] = tickets && tickets.map((ticket) => ({
     "Ticket ID": ticket.id.toString(),
     "Ticket Type": ticket.ticket_type,
     Subject: ticket.subject,
@@ -57,7 +60,7 @@ const Table: React.FC<TableProps> = ({ tickets }) => {
           </tr>
         </thead>
         <tbody>
-          {tableData.map((row, index) => (
+          { tableData &&tableData.map((row, index) => (
             <tr key={index} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
               {tableHead.map((heading) => (
                 <td key={heading} className="px-6 py-4">
