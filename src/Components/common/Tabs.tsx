@@ -157,7 +157,7 @@ const Example: React.FC = () => {
             {categories.map(({ name }) => (
               <Tab
                 key={name}
-                className="py-1 px-2 lg:px-3 text-[#9291A5] focus:outline-none focus:border-b-4 focus:border-[#5027D9] focus:text-[#5027D9] data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-none text-xs"
+                className="py-1 px-2 lg:px-3 text-[#9291A5] focus:outline-none focus:border-b-4 focus:border-[#5027D9] focus:text-[#5027D9] data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-none text-xs lg:text-base"
               >
                 {name}
               </Tab>

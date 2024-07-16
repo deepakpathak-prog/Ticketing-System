@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import DropdownArrow from "../../../public/images/dropdown.svg";
 import { Button } from "@headlessui/react";
@@ -23,14 +23,14 @@ const DropdownFilters: React.FC<DropdownFiltersProps> = ({
   handleReset,
 }) => {
   return (
-    <div className="flex gap-2 font-normal mt-2">
+    <div className="lg:flex gap-2 font-normal mt-2">
       <div className="relative">
         <select
           name="type"
           id="type"
           value={typeValue}
           onChange={(e) => setTypeValue(e.target.value)}
-          className="w-[21em] p-2 pl-3 pr-8 border-2 border-[#E8E8E8] rounded-md text-[#8E8E8E] appearance-none bg-white"
+          className="w-full lg:w-[19em] p-2 pl-3 pr-8 border-2 border-[#E8E8E8] rounded-md text-[#8E8E8E] appearance-none bg-white my-2 lg-my-0"
         >
           <option value="Type">Type</option>
           <option value="option1">Option 1</option>
@@ -47,7 +47,7 @@ const DropdownFilters: React.FC<DropdownFiltersProps> = ({
           id="priority"
           value={priorityValue}
           onChange={(e) => setPriorityValue(e.target.value)}
-          className="w-[21em] p-2 pl-3 pr-8 border-2 border-[rgb(232,232,232)] rounded-md text-[#8E8E8E] appearance-none bg-white"
+          className="w-full lg:w-[19em] p-2 pl-3 pr-8 border-2 border-[rgb(232,232,232)] rounded-md text-[#8E8E8E] appearance-none bg-white my-2 lg-my-0"
         >
           <option value="Priority">Priority</option>
           <option value="option1">Option 1</option>
@@ -64,7 +64,7 @@ const DropdownFilters: React.FC<DropdownFiltersProps> = ({
           id="status"
           value={statusValue}
           onChange={(e) => setStatusValue(e.target.value)}
-          className="w-[21em] p-2 pl-3 pr-8 border-2 border-[#E8E8E8] rounded-md text-[#8E8E8E] appearance-none bg-white"
+          className="w-full lg:w-[19em] p-2 pl-3 pr-8 border-2 border-[#E8E8E8] rounded-md text-[#8E8E8E] appearance-none bg-white my-2 lg-my-0"
         >
           <option value="Status">Status</option>
           <option value="option1">Option 1</option>
@@ -77,7 +77,7 @@ const DropdownFilters: React.FC<DropdownFiltersProps> = ({
 
       <Button
         onClick={handleReset}
-        className="flex justify-center rounded bg-[#5027D9] py-2 px-4 text-sm text-white items-center gap-2 w-[100%]"
+        className="w-full flex justify-center rounded bg-[#5027D9] py-2 px-10 text-sm text-white items-center gap-2  lg:w-fit my-2 lg-my-0"
       >
         Reset
       </Button>
