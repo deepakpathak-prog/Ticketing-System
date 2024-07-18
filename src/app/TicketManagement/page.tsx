@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Bell from "../../../public/images/bell.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { Button } from "@headlessui/react";
 import Folder from "../../../public/images/folder.svg";
 import Plus from "../../../public/images/Plus.svg";
@@ -31,8 +31,11 @@ type Ticket = {
   actions: string;
 };
 
-export default function Page() {
- 
+type User = {
+  profile_url: string;
+};
+
+function TicketManagementPage() {
   const searchParams = useSearchParams();
 
   const initialType = searchParams.get('type') || "Type";
@@ -57,70 +60,78 @@ export default function Page() {
   }, [typeValue, priorityValue, statusValue, searchQuery]);
 
   const fetchTickets = async (page = 1) => {
-  try {
-    const response = await axios.get<{ tickets: Ticket[], totalPages: number, currentPage: number }>(
-      "http://localhost:8000/filtertickets",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-        params: {
-          type: typeValue !== "Type" ? typeValue : undefined,
-          priority: priorityValue !== "Priority" ? priorityValue : undefined,
-          status: statusValue !== "Status" ? statusValue : undefined,
-          search: searchQuery || '',
-          page: page,
-          limit: 10,
-        },
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      if (!token) {
+        throw new Error("No token found");
       }
-    );
 
-    console.log("response", response);
+      const response = await axios.get<{ tickets: Ticket[], totalPages: number, currentPage: number }>(
+        "http://localhost:8000/filtertickets",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            type: typeValue !== "Type" ? typeValue : undefined,
+            priority: priorityValue !== "Priority" ? priorityValue : undefined,
+            status: statusValue !== "Status" ? statusValue : undefined,
+            search: searchQuery || '',
+            page: page,
+            limit: 10,
+          },
+        }
+      );
 
-    if (response.data) {
-      setTickets(response.data.tickets);
-      setTotalPages(response.data.totalPages);
-      setCurrentPage(response.data.currentPage);
-    } else {
-      throw new Error("No tickets found");
-    }
-  } catch (error) {
-    console.error("Error fetching tickets:", error);
-  }
-};
+      console.log("response", response);
 
-const fetchUser = async () => {
-  try {
-    const response = await axios.get<{ user: User }>(
-      "http://localhost:8000/getUserDetails",
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
+      if (response.data) {
+        setTickets(response.data.tickets);
+        setTotalPages(response.data.totalPages);
+        setCurrentPage(response.data.currentPage);
+      } else {
+        throw new Error("No tickets found");
       }
-    );
-    if (response) {
-      setProfilePicture(response.data.user.profile_url);
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
     }
-  } catch (error) {
-    console.error("Error fetching tickets:", error);
-  }
-};
+  };
 
-const handlePageChange = (newPage: any) => {
-  if (newPage >= 1 && newPage <= totalPages) {
-    setCurrentPage(newPage);
-    fetchTickets(newPage);
-  }
-};
+  const fetchUser = async () => {
+    try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      if (!token) {
+        throw new Error("No token found");
+      }
 
+      const response = await axios.get<{ user: User }>(
+        "http://localhost:8000/getUserDetails",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response) {
+        setProfilePicture(response.data.user.profile_url);
+      }
+    } catch (error) {
+      console.error("Error fetching tickets:", error);
+    }
+  };
+
+  const handlePageChange = (newPage: any) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      fetchTickets(newPage);
+    }
+  };
 
   const handleReset = () => {
     setTypeValue("Type");
     setPriorityValue("Priority");
     setStatusValue("Status");
     setCurrentPage(1);
-    
   };
 
   const exportTableToExcel = () => {
@@ -132,7 +143,7 @@ const handlePageChange = (newPage: any) => {
 
     rows.forEach(row => {
       const cols = Array.from(row.querySelectorAll("td, th"));
-      const rowData = cols.map(col => col.innerText).join(",");
+      const rowData = cols.map(col => (col as HTMLElement).innerText).join(",");
       csvContent += rowData + "\n";
     });
 
@@ -158,16 +169,18 @@ const handlePageChange = (newPage: any) => {
             <Image src={Bell} alt="Notification Bell" width={25} />
           </div>
           <div className="w-12 h-12 rounded-full overflow-hidden">
-            <Image
-              src={profilePicture}
-              alt="Profile Picture"
-              width={48}
-              height={48}
-              className="object-cover w-full h-full"
-            />
+            {profilePicture && (
+              <Image
+                src={profilePicture}
+                alt="Profile Picture"
+                width={48}
+                height={48}
+                className="object-cover w-full h-full"
+              />
+            )}
           </div>
         </div>
-      </div> */}
+      </div>
 
       <div className="lg:flex justify-between items-center mt-5 lg:mt-10 lg:mx-8 mx-5">
         <div>
@@ -175,7 +188,7 @@ const handlePageChange = (newPage: any) => {
         </div>
         <div className="lg:flex justify-around items-center gap-2">
           <div>
-          <SearchBar setSearchQuery={setSearchQuery} />
+            <SearchBar setSearchQuery={setSearchQuery} />
           </div>
           <div>
             <Button className="flex rounded bg-white py-2 px-4 text-sm text-[#5027D9] items-center gap-2 border-2 border-[#5027D9]" onClick={exportTableToExcel}>
@@ -185,11 +198,11 @@ const handlePageChange = (newPage: any) => {
           </div>
           <div>
             <Link href="/TicketManagement/NewTicket">
-            <Button className="flex rounded bg-[#5027D9] py-2 border-2 border-[#5027D9] px-4 text-sm text-white items-center gap-2">
-              <Image src={Plus} alt="Plus Icon" width={22} height={22} />
-              New Ticket
-            </Button></Link>
-            
+              <Button className="flex rounded bg-[#5027D9] py-2 border-2 border-[#5027D9] px-4 text-sm text-white items-center gap-2">
+                <Image src={Plus} alt="Plus Icon" width={22} height={22} />
+                New Ticket
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -217,5 +230,12 @@ const handlePageChange = (newPage: any) => {
       </div>
     </div>
   );
+}
 
+export default function PageWrapper() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <TicketManagementPage />
+    </Suspense>
+  );
 }

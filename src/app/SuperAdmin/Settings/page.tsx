@@ -521,7 +521,7 @@ export default function Settings() {
                         Customer Management
                       </h2>
                       <div className="flex gap-5">
-                        <SearchBar />
+                        {/* <SearchBar /> */}
                         <div className="flex gap-5">
                           <div>
                             <Button
@@ -674,7 +674,7 @@ export default function Settings() {
                     Organisation Management
                   </h2>
                   <div className="flex gap-5">
-                    <SearchBar />
+                    {/* <SearchBar /> */}
                     <div className="flex gap-5 ">
                       <div>
                         <Button
@@ -936,7 +936,7 @@ export default function Settings() {
               <div className="flex justify-between items-center pb-7">
                 <h2 className="text-2xl font-semibold">Status Management</h2>
                 <div className="flex gap-5">
-                  <SearchBar />
+                  {/* <SearchBar /> */}
                   <div className="flex gap-5">
                     <div>
                       <Button

@@ -10,8 +10,13 @@ import axios from 'axios';
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from 'next/navigation';
 
+
+interface SidebarProps {
+    isExpanded: boolean;
+    setIsSidebarExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  }
 // const router = useRouter()
-const Sidebar = () => {
+const Sidebar: React.FC<SidebarProps> = ({ isExpanded, setIsSidebarExpanded }) => {
 
     const router = useRouter()
 

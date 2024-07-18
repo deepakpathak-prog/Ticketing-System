@@ -3,7 +3,13 @@ import Image from 'next/image';
 import NextIcon from "../../../public/images/Next.svg";
 import PreviosIcon from "../../../public/images/Previous.svg";
 
-const TablePagination = ({ currentPage, totalPages, onPageChange }) => {
+interface TablePaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+const TablePagination: React.FC<TablePaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
   return (
     <div className="flex justify-center mt-10 mb-10">
       <button

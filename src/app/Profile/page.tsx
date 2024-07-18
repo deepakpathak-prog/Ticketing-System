@@ -13,7 +13,9 @@ import Form from "../../Components/common/form";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
+type User = {
+  profile_url: string;
+};
 
 export default function Profile() {
   

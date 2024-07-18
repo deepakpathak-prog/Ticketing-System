@@ -17,6 +17,8 @@ type Ticket = {
   priority: string;
   createdAt: string; 
   updatedAt: string; 
+  status: string;
+  actions: string;
 };
 
 
