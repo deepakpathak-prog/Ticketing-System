@@ -10,6 +10,8 @@ import userBg from "../../../../../public/images/User.svg";
 import axios, { AxiosResponse } from "axios";
 import { useRouter, usePathname } from "next/navigation";
 import addticket from "../../../../../public/images/add.svg";
+import Bell from "../../../../../public/images/bell.svg";
+import userBg from "../../../../../public/images/User.svg";
 
 interface UploadedFile {
   filename: string;

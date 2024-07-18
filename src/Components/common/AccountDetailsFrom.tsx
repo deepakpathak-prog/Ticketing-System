@@ -14,7 +14,7 @@ import { useRouter, usePathname } from "next/navigation";
 type FormInputs = {
   customerName: string;
   companyName: string;
-  phoneNumber: number;
+  phoneNumber: string;
   companyUrl: string;
   companyAddress: string;
   city: string;
@@ -36,6 +36,27 @@ const AccountDetailsForm: React.FC = () => {
 
 
   const [userEmail, setUserEmail] = useState("");
+  const [profileImage, setProfileImage] = useState<any>("");
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyUrl, setCompanyUrl] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [aboutCompany, setAboutCompany] = useState("");
+  const [workdomain, setWorkDomain] = useState("");
+
+  const handleProfileImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file: any = event.target.files?.[0];
+    if (file) {
+      setProfileImage(file);
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
   }, []);

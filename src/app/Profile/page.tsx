@@ -8,6 +8,14 @@ import Bell from "../../../public/images/bell.svg";
 import userBg from "../../../public/images/User.svg";
 import Tabs from "../../Components/common/Tabs";
 import Form from "../../Components/common/form";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+type User = {
+  profile_url: string;
+};
+
+
 
 export default function Profile() {
   return (

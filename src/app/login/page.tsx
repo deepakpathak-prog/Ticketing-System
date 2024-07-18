@@ -62,8 +62,6 @@ const LoginForm = () => {
           localStorage.setItem("token", response.data.token);
           setLoading(false)
           router.push("/Dashboard");
-
-          // window.location.href = "/AccountDetails";
         }
       }
     } catch (error) {

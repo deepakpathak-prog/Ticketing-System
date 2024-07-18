@@ -42,6 +42,10 @@ type Ticket = {
   actions: string;
 };
 
+type User = {
+  profile_url: string;
+};
+
 export default function Page() {
   // State variables to manage dropdown values
   const [tickets, setTickets] = useState<Ticket[]>([]);
@@ -53,7 +57,13 @@ export default function Page() {
     fetchTickets();
   }, []);
 
-  const fetchTickets = async () => {
+
+
+  useEffect(() => {
+    fetchTickets();
+  }, [typeValue, priorityValue, statusValue, searchQuery]);
+
+  const fetchTickets = async (page = 1) => {
   try {
     const response = await axios.get<{ tickets: Ticket[] }>(
       "http://localhost:8000/viewAllTickets",
@@ -79,6 +89,35 @@ export default function Page() {
     setTypeValue("Type");
     setPriorityValue("Priority");
     setStatusValue("Status");
+    setCurrentPage(1);
+    
+  };
+
+  const exportTableToExcel = () => {
+    const table = document.getElementById('all-tickets-table');
+    if (!table) return;
+
+    let csvContent = "";
+    const rows = Array.from(table.querySelectorAll("tr"));
+
+    rows.forEach(row => {
+      const cols = Array.from(row.querySelectorAll("td, th"));
+      const rowData = cols.map(col => col.textContent || "").join(",");
+      csvContent += rowData + "\n";
+    });
+
+    const dataType = 'text/csv;charset=utf-8;';
+    const fileName = 'tickets.csv';
+    const downloadLink = document.createElement('a');
+
+    const blob = new Blob([csvContent], { type: dataType });
+    const url = URL.createObjectURL(blob);
+    downloadLink.href = url;
+    downloadLink.download = fileName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  }
   };
 
   return (
