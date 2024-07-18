@@ -336,7 +336,7 @@ const AccountDetailsForm: React.FC = () => {
 
   const renderSkipButton =
     pathname === "/AccountDetails" ? (
-      <Link href="/Dashboard">
+      <Link href="/team/ManagerDashboard">
         <button className="block text-sm text-[#5027D9]">Skip for now</button>
       </Link>
     ) : null;
@@ -417,12 +417,15 @@ const AccountDetailsForm: React.FC = () => {
         }
       );
 
-      // console.log("Form submitted successfully:", response.data);
-      toast.success("Account details updated successfully");
-      router.push("/Dashboard");
+      console.log("Form submitted successfully:", response.data);
+      toast.success("Account details added successfully");
+      localStorage.setItem("onBoarded", "true");
+
+
+      router.push("/team/ManagerDashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error("Failed to update account details");
+      toast.error("Failed to add account details");
     }
   };
 
