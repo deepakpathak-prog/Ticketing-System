@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
-// import { useForm, SubmitHandler } from "react-hook-form";
-// import ProfilePic from "../../../public/images/Group 206.svg";
 import { useForm, SubmitHandler, FieldErrors, UseFormRegister } from "react-hook-form";
 import Image from 'next/image';
 import ProfilePic from "../../../public/images/Profile.svg";
@@ -107,7 +105,7 @@ const Example: React.FC = () => {
   } = useForm<SecurityInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    console.log(data); // Replace with your logic to handle form submission
+    console.log(data);
   };
 
   const onSubmitSecurity: SubmitHandler<SecurityInputs> = async (data) => {
@@ -157,7 +155,11 @@ const Example: React.FC = () => {
             {categories.map(({ name }) => (
               <Tab
                 key={name}
-                className="py-1 px-2 lg:px-3 text-[#9291A5] focus:outline-none focus:border-b-4 focus:border-[#5027D9] focus:text-[#5027D9] data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-none text-xs lg:text-base"
+                className={({ selected }) =>
+                  `py-1 px-3 text-[#9291A5] focus:outline-none ${
+                    selected ? "border-b-4 border-[#5027D9] text-[#5027D9]" : ""
+                  }`
+                }
               >
                 {name}
               </Tab>
@@ -168,172 +170,7 @@ const Example: React.FC = () => {
               <TabPanel key={name}>
                 
                 {name === "Edit Profile" && (
-                  
-                  <div className="lg:flex">
-                    <div className="text-base lg:text-xl font-medium">Basic details</div>
-                    <div className="lg:py-7 pt-7 lg:pr-10 pr-52">
-                      {/* <Image src={ProfilePic} alt="hhh" width={400} /> */}
-                      <Image src={ProfilePic} alt="Profile Pic" width={400} />
-                    </div>
-                    <div>
-                      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-2">
-                        <div className="lg:flex lg:flex-wrap -mx-2">
-                          <div className="lg:w-1/2 px-2 ">
-                            <label htmlFor="companyName" className="block mt-3 lg:text-base text-sm">
-                              Company Name
-                            </label>
-                            <input
-                              id="companyName"
-                              type="text"
-                              {...register("companyName", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.companyName && (
-                              <span role="alert" className="text-red-600">
-                                Company Name is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="email" className="block mt-3 lg:text-base text-sm">
-                              Email
-                            </label>
-                            <input
-                              id="email"
-                              type="email"
-                              {...register("email", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.email && (
-                              <span role="alert" className="text-red-600">
-                                Email is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="phoneNumber" className="block mt-6 lg:text-base text-sm">
-                              Phone Number
-                            </label>
-                            <input
-                              id="phoneNumber"
-                              type="tel"
-                              {...register("phoneNumber", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.phoneNumber && (
-                              <span role="alert" className="text-red-600">
-                                Phone Number is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="companyUrl" className="block mt-6 lg:text-base text-sm">
-                              Company URL
-                            </label>
-                            <input
-                              id="companyUrl"
-                              type="text"
-                              {...register("companyUrl", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.companyUrl && (
-                              <span role="alert" className="text-red-600">
-                                Company URL is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="companyAddress" className="block mt-6 lg:text-base text-sm">
-                              Company Address
-                            </label>
-                            <input
-                              id="companyAddress"
-                              type="text"
-                              {...register("companyAddress", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.companyAddress && (
-                              <span role="alert" className="text-red-600">
-                                Company Address is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="city" className="block mt-6 lg:text-base text-sm">
-                              City
-                            </label>
-                            <input
-                              id="city"
-                              type="text"
-                              {...register("city", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.city && (
-                              <span role="alert" className="text-red-600">
-                                City is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="country" className="block mt-6 lg:text-base text-sm">
-                              Country
-                            </label>
-                            <input
-                              id="country"
-                              type="text"
-                              {...register("country", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.country && (
-                              <span role="alert" className="text-red-600">
-                                Country is required
-                              </span>
-                            )}
-                          </div>
-                          <div className="lg:w-1/2 px-2">
-                            <label htmlFor="postalCode" className="block mt-6 lg:text-base text-sm">
-                              Postal Code
-                            </label>
-                            <input
-                              id="postalCode"
-                              type="text"
-                              {...register("postalCode", { required: true })}
-                              className="input-field p-2 mt-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                            />
-                            {errors.postalCode && (
-                              <span role="alert" className="text-red-600">
-                                Postal Code is required
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="w-full lg:px-2">
-                          <label htmlFor="aboutCompany" className="block mt-6 lg:text-base text-sm">
-                            About Company
-                          </label>
-                          <textarea
-                            id="aboutCompany"
-                            {...register("aboutCompany", { required: true })}
-                            className="input-field p-2 mt-2 w-full h-40 border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-                          />
-                          {errors.aboutCompany && (
-                            <span role="alert" className="text-red-600">
-                              About Company is required
-                            </span>
-                          )}
-                        </div>
-                        <WorkDomainInput register={register} errors={errors} />
-                        <div className="flex lg:justify-end justify-center w-full mt-6">
-                          <button
-                            type="submit"
-                            className="btn-submit lg:ml-auto block rounded bg-[#5027D9] py-3 px-5 text-sm text-white"
-                          >
-                            Save details
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
+                  <AccountDetailsForm />
                 )}
                 {name === "Member management" && (
                   <div>

@@ -1,45 +1,68 @@
-import { FC } from "react";
-import logoWhite from "../../../public/images/sidebarLogo.svg";
-import Image from "next/image";
-import Link from "next/link";
-import dashboardGrp from "../../../public/images/dashboardGrp.svg";
-import profileGrp from "../../../public/images/profileGrp.svg";
-import ticketmanagementgrp from "../../../public/images/ticketManagementGrp.svg";
+import logoWhite from '../../../public/images/sidebarLogo.svg'
+import Image from 'next/image';
+import Link from 'next/link';
+import dashboardGrp from '../../../public/images/dashboardGrp.svg'
+import profileGrp from '../../../public/images/profileGrp.svg'
+import ticketmanagementgrp from '../../../public/images/ticketManagementGrp.svg'
+import logout from "../../../public/images/logoutNew.svg"
+// import { useRouter } from 'next/router';
+import axios from 'axios';
+import toast, { Toaster } from "react-hot-toast";
+import { useRouter } from 'next/navigation';
 
-interface SidebarProps {
-  isExpanded: boolean;
-  setIsSidebarExpanded: (isExpanded: boolean) => void; // Add setter for isExpanded state
-}
+// const router = useRouter()
+const Sidebar = () => {
 
-const Sidebar: FC<SidebarProps> = ({ isExpanded, setIsSidebarExpanded }) => {
-  const handleLinkClick = () => {
-    setIsSidebarExpanded(false); // Close the sidebar when a link is clicked
-  };
+    const router = useRouter()
 
-  return (
-    <div
-      className={`flex-col gap-10 bg-[#2A2C3E] h-full p-8 m-auto fixed z-50 ${
-        isExpanded ? "w-full h-auto" : "w-[20%]"
-      } ${isExpanded ? "block" : "hidden lg:block"}`}
-    >
-      <div className="flex justify-center items-center mb-10">
-        <Image src={logoWhite} alt="logo" height={80} width={150} />
-      </div>
-      <div className="flex flex-col gap-5">
-        <div className="flex gap-3 text-white pt-3 pb-3 pl-4 w-[90%] rounded-md hover:bg-[#5027D9]">
-          <Image src={dashboardGrp} alt="dashboard" />
-          <Link href="/Dashboard" onClick={handleLinkClick}>Dashboard</Link>
+    const handleLogout = async () => {
+        try {
+          
+            localStorage.removeItem('token'); 
+            
+            
+    
+            // Notify the user of successful logout
+            toast.success("Logged out successfully");
+
+            router.push("/login")
+        } catch (error) {
+            // Handle error
+            toast.error("Error in logout");
+            console.error("Error in logout:", error);
+        }
+    }
+
+    
+    return (
+        <div className="flex flex-col gap-10 w-[15%] bg-[#2A2C3E] h-screen p-8">
+            <div className='flex justify-start'>
+                <Image 
+                    src={logoWhite}
+                    alt="logo"
+                    height={80}
+                    width={150}
+                />
+
+            </div>
+
+            <div className='flex flex-col gap-5'>
+                <div className='flex gap-3 text-white pt-3 pb-3 pl-4 pr-4  rounded-md hover:bg-[#5027D9] text-sm items-center'><Image src={dashboardGrp} alt="dashboard"/><Link href="/Dashboard">Dashboard</Link></div>
+                <div className='flex gap-2 text-white pt-3 pb-3 pl-3 pr-4  rounded-md hover:bg-[#5027D9] text-sm items-center'><Image src={ticketmanagementgrp} alt="dashboard"/><Link href="/TicketManagement">Ticket Management</Link></div>
+                <div className='flex gap-3 text-white pt-3 pb-3 pl-4 pr-4 rounded-md hover:bg-[#5027D9] text-[16px]items-center text-sm items-center'><Image src={profileGrp} alt="dashboard"/><Link href="/Profile">Profile</Link></div>
+                <div className='flex gap-3 text-white pt-3 pb-3 pl-4 pr-4 rounded-md hover:bg-[#5027D9] text-sm items-center '>
+                    <Image src={logout} alt='logout' width={20}/>
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
+
+            </div>
+            {/* <div className='h-full items-center inline'>
+                <button onClick={handleLogout}>
+                    <Image src={logout} alt='arrow'/><span>Logout</span>
+                </button>
+            </div> */}
         </div>
-        <div className="flex gap-3 text-white pt-3 pb-3 pl-3 w-[90%] rounded-md hover:bg-[#5027D9]">
-          <Image src={ticketmanagementgrp} alt="Ticket Management" />
-          <Link href="/TicketManagement" onClick={handleLinkClick}>Ticket Management</Link>
-        </div>
-        <div className="flex gap-3 text-white pt-3 pb-3 pl-4 w-[90%] rounded-md hover:bg-[#5027D9]">
-          <Image src={profileGrp} alt="Profile" />
-          <Link href="/Profile" onClick={handleLinkClick}>Profile</Link>
-        </div>
-      </div>
-    </div>
+
   );
 };
 

@@ -19,12 +19,50 @@ export default function Page() {
   const [requestDetails, setRequestDetails] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  // const [text, setText] = useState('');
+  const [editorHtml, setEditorHtml] = useState("");
+
   const [errors, setErrors] = useState({
     ticketType: false,
     priority: false,
     subject: false,
     requestDetails: false,
   });
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link"],
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+  ];
+
+  const handleTextAreaChange = (html: string) => {
+    console.log("Text Area Changed:", html);
+    setEditorHtml(html);
+    setErrors({ ...errors, requestDetails: false });
+  };
+
+  const [loading, setLoading] = useState(false);
 
   const handleTicketTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setTicketType(e.target.value);

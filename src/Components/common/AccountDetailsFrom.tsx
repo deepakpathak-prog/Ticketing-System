@@ -4,12 +4,13 @@ import React, { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import Image from "next/image";
-import Profile from "../../../public/images/Profile.svg";
-import Close from "../../../public/images/close.svg";
+import ProfilePic from "../../../public/images/Profile.svg";
+import Close from "../../../public/images/closebutton.svg";
 import toast, { Toaster } from "react-hot-toast";
 
 import Link from "next/link";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { File } from "buffer";
 
 type FormInputs = {
   customerName: string;
@@ -22,20 +23,270 @@ type FormInputs = {
   postalCode: string;
   aboutCompany: string;
   workDomain: string;
+  profileImage: File | null;
 };
 
 interface UserDetailsResponse {
   user: {
     email: string;
-  };
+    customer_name: string;
+    company_legal_name: string;
+    company_url: string;
+    phone_number: string;
+    address: string;
+    country: string;
+    city: string;
+    postal_code: string;
+    about_company: string;
+    work_domain: string;
+  },
+  email: string;
+    customer_name: string;
+    company_legal_name: string;
+    company_url: string;
+    phone_number: string;
+    address: string;
+    country: string;
+    city: string;
+    postal_code: string;
+    about_company: string;
+    work_domain: string;
 }
 
+const countries = [
+  "Afghanistan",
+  "Albania",
+  "Algeria",
+  "Andorra",
+  "Angola",
+  "Anguilla",
+  "Antigua &amp; Barbuda",
+  "Argentina",
+  "Armenia",
+  "Aruba",
+  "Australia",
+  "Austria",
+  "Azerbaijan",
+  "Bahamas",
+  "Bahrain",
+  "Bangladesh",
+  "Barbados",
+  "Belarus",
+  "Belgium",
+  "Belize",
+  "Benin",
+  "Bermuda",
+  "Bhutan",
+  "Bolivia",
+  "Bosnia &amp; Herzegovina",
+  "Botswana",
+  "Brazil",
+  "British Virgin Islands",
+  "Brunei",
+  "Bulgaria",
+  "Burkina Faso",
+  "Burundi",
+  "Cambodia",
+  "Cameroon",
+  "Cape Verde",
+  "Cayman Islands",
+  "Chad",
+  "Chile",
+  "China",
+  "Colombia",
+  "Congo",
+  "Cook Islands",
+  "Costa Rica",
+  "Cote D Ivoire",
+  "Croatia",
+  "Cruise Ship",
+  "Cuba",
+  "Cyprus",
+  "Czech Republic",
+  "Denmark",
+  "Djibouti",
+  "Dominica",
+  "Dominican Republic",
+  "Ecuador",
+  "Egypt",
+  "El Salvador",
+  "Equatorial Guinea",
+  "Estonia",
+  "Ethiopia",
+  "Falkland Islands",
+  "Faroe Islands",
+  "Fiji",
+  "Finland",
+  "France",
+  "French Polynesia",
+  "French West Indies",
+  "Gabon",
+  "Gambia",
+  "Georgia",
+  "Germany",
+  "Ghana",
+  "Gibraltar",
+  "Greece",
+  "Greenland",
+  "Grenada",
+  "Guam",
+  "Guatemala",
+  "Guernsey",
+  "Guinea",
+  "Guinea Bissau",
+  "Guyana",
+  "Haiti",
+  "Honduras",
+  "Hong Kong",
+  "Hungary",
+  "Iceland",
+  "India",
+  "Indonesia",
+  "Iran",
+  "Iraq",
+  "Ireland",
+  "Isle of Man",
+  "Israel",
+  "Italy",
+  "Jamaica",
+  "Japan",
+  "Jersey",
+  "Jordan",
+  "Kazakhstan",
+  "Kenya",
+  "Kuwait",
+  "Kyrgyz Republic",
+  "Laos",
+  "Latvia",
+  "Lebanon",
+  "Lesotho",
+  "Liberia",
+  "Libya",
+  "Liechtenstein",
+  "Lithuania",
+  "Luxembourg",
+  "Macau",
+  "Macedonia",
+  "Madagascar",
+  "Malawi",
+  "Malaysia",
+  "Maldives",
+  "Mali",
+  "Malta",
+  "Mauritania",
+  "Mauritius",
+  "Mexico",
+  "Moldova",
+  "Monaco",
+  "Mongolia",
+  "Montenegro",
+  "Montserrat",
+  "Morocco",
+  "Mozambique",
+  "Namibia",
+  "Nepal",
+  "Netherlands",
+  "Netherlands Antilles",
+  "New Caledonia",
+  "New Zealand",
+  "Nicaragua",
+  "Niger",
+  "Nigeria",
+  "Norway",
+  "Oman",
+  "Pakistan",
+  "Palestine",
+  "Panama",
+  "Papua New Guinea",
+  "Paraguay",
+  "Peru",
+  "Philippines",
+  "Poland",
+  "Portugal",
+  "Puerto Rico",
+  "Qatar",
+  "Reunion",
+  "Romania",
+  "Russia",
+  "Rwanda",
+  "Saint Pierre &amp; Miquelon",
+  "Samoa",
+  "San Marino",
+  "Satellite",
+  "Saudi Arabia",
+  "Senegal",
+  "Serbia",
+  "Seychelles",
+  "Sierra Leone",
+  "Singapore",
+  "Slovakia",
+  "Slovenia",
+  "South Africa",
+  "South Korea",
+  "Spain",
+  "Sri Lanka",
+  "St Kitts &amp; Nevis",
+  "St Lucia",
+  "St Vincent",
+  "St. Lucia",
+  "Sudan",
+  "Suriname",
+  "Swaziland",
+  "Sweden",
+  "Switzerland",
+  "Syria",
+  "Taiwan",
+  "Tajikistan",
+  "Tanzania",
+  "Thailand",
+  "Timor L'Este",
+  "Togo",
+  "Tonga",
+  "Trinidad &amp; Tobago",
+  "Tunisia",
+  "Turkey",
+  "Turkmenistan",
+  "Turks &amp; Caicos",
+  "Uganda",
+  "Ukraine",
+  "United Arab Emirates",
+  "United Kingdom",
+  "Uruguay",
+  "Uzbekistan",
+  "Venezuela",
+  "Vietnam",
+  "Virgin Islands (US)",
+  "Yemen",
+  "Zambia",
+  "Zimbabwe",
+];
+
 const AccountDetailsForm: React.FC = () => {
-  const router = useRouter();
+  const router = useRouter()
   const pathname = usePathname();
 
-
   const [userEmail, setUserEmail] = useState("");
+  const [profileImage, setProfileImage] = useState<File>();
+  const [name, setName] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyUrl, setCompanyUrl] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [aboutCompany, setAboutCompany] = useState("");
+  const [workdomain, setWorkDomain] = useState("");
+
+  const handleProfileImageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setProfileImage(file);
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
   }, []);
@@ -52,6 +303,31 @@ const AccountDetailsForm: React.FC = () => {
       );
       if (response) {
         setUserEmail(response.data.user.email);
+        setName(response.data.user.customer_name);
+        setCompanyName(response.data.user.company_legal_name);
+        setCompanyUrl(response.data.user.company_url);
+        setPhoneNumber(response.data.user.phone_number);
+        setAddress(response.data.user.address);
+        setCity(response.data.user.city);
+        setCountry(response.data.user.country);
+        setPostalCode(response.data.user.postal_code);
+        setAboutCompany(response.data.user.about_company);
+        setWorkDomain(response.data.user.work_domain);
+
+        console.log(response.data.user.country);
+
+        setValue("customerName", response.data.user.customer_name);
+        setValue("companyName", response.data.user.company_legal_name);
+        setValue("companyUrl", response.data.user.company_url);
+        setValue("phoneNumber", response.data.user.phone_number);
+        setValue("companyAddress", response.data.user.address);
+        setValue("city", response.data.user.city);
+        setValue("country", response.data.user.country);
+        setValue("postalCode", response.data.user.postal_code);
+        setValue("aboutCompany", response.data.user.about_company);
+        setValue("workDomain", response.data.user.work_domain);
+
+        // setCountry(response.data.user.)
       }
     } catch (error) {
       console.log(error);
@@ -72,7 +348,7 @@ const AccountDetailsForm: React.FC = () => {
         className="btn-submit ml-auto block rounded bg-[#5027D9] py-4 px-14 text-sm text-white"
       >
         Next
-      </button> 
+      </button>
     ) : (
       <button
         type="submit"
@@ -110,35 +386,43 @@ const AccountDetailsForm: React.FC = () => {
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    console.log("Form data:", data); // Log form data to console
     try {
-      const response = await axios.post(
-        "http://localhost:8000/addAccountDetails",
-        {
-          customer_name: data.customerName,
-          company_legal_name: data.companyName,
-          company_url: data.companyUrl,
-          phone_number: data.phoneNumber,
-          address: data.companyAddress,
-          postal_code: data.postalCode,
-          country: data.country,
-          city: data.city,
-          about_company: data.aboutCompany,
-          work_domain: data.workDomain,
-        },
+      const formData = new FormData();
+
+      // Append profile image if it exists
+      if (profileImage) {
+        formData.append("files", profileImage);
+      }
+
+      // Append other form data
+      formData.append("customer_name", data.customerName);
+      formData.append("company_legal_name", data.companyName);
+      formData.append("company_url", data.companyUrl);
+      formData.append("phone_number", data.phoneNumber.toString());
+      formData.append("address", data.companyAddress);
+      formData.append("postal_code", data.postalCode);
+      formData.append("country", data.country);
+      formData.append("city", data.city);
+      formData.append("about_company", data.aboutCompany);
+      formData.append("work_domain", data.workDomain);
+
+      const response = await axios.put(
+        "http://localhost:8000/updateAccountDetails",
+        formData,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming you store token in localStorage
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      console.log("Form submitted successfully:", response.data);
-      toast.success("Account details added successfully");
-
+      // console.log("Form submitted successfully:", response.data);
+      toast.success("Account details updated successfully");
       router.push("/Dashboard");
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Failed to update account details");
     }
   };
 
@@ -149,8 +433,31 @@ const AccountDetailsForm: React.FC = () => {
         <div className="text-xl font-semibold">Basic Details</div>
         <div className="flex py-5 items-center">
           <div className="w-[20%]">
-            <Image src={Profile} alt="Profile Pic" className="pr-3" />
+            <div className="relative w-20 h-20 rounded-full overflow-hidden cursor-pointer">
+              <Image
+                src={
+                  profileImage ? URL.createObjectURL(profileImage) : ProfilePic
+                }
+                alt="Profile Pic"
+                layout="fill"
+                objectFit="cover"
+                onClick={() => {
+                  const uploadInput = document.getElementById("uploadImage");
+                  if (uploadInput) {
+                    uploadInput.click();
+                  }
+                }}
+              />
+            </div>
+            <input
+              id="uploadImage"
+              type="file"
+              accept="image/*"
+              onChange={handleProfileImageChange}
+              className="hidden"
+            />
           </div>
+
           <div className="grid grid-cols-2 gap-4 w-full">
             <div>
               <label htmlFor="customerName" className="block text-sm">
@@ -159,6 +466,11 @@ const AccountDetailsForm: React.FC = () => {
               <input
                 id="customerName"
                 type="text"
+                defaultValue={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setValue("customerName", e.target.value);
+                }}
                 {...register("customerName", { required: true })}
                 className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
               />
@@ -176,6 +488,11 @@ const AccountDetailsForm: React.FC = () => {
               <input
                 id="companyName"
                 type="text"
+                defaultValue={companyName}
+                onChange={(e) => {
+                  setCompanyName(e.target.value);
+                  setValue("companyAddress", e.target.value)
+                }}
                 {...register("companyName", { required: true })}
                 className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
               />
@@ -192,6 +509,11 @@ const AccountDetailsForm: React.FC = () => {
               <input
                 id="companyUrl"
                 type="url"
+                defaultValue={companyUrl}
+                onChange={(e) => {
+                  setCompanyUrl(e.target.value);
+                  setValue("companyUrl", e.target.value);
+                }}
                 {...register("companyUrl", {
                   required: true,
                   pattern: {
@@ -220,6 +542,11 @@ const AccountDetailsForm: React.FC = () => {
             <input
               id="phoneNumber"
               type="tel"
+              defaultValue={phoneNumber}
+              onChange={(e) => {
+                setPhoneNumber(e.target.value);
+                setValue("phoneNumber",e.target.value);
+              }}
               {...register("phoneNumber", {
                 required: true,
                 pattern: {
@@ -243,6 +570,7 @@ const AccountDetailsForm: React.FC = () => {
               id="email"
               type="email"
               disabled={true}
+              
               placeholder={userEmail}
               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
@@ -254,6 +582,11 @@ const AccountDetailsForm: React.FC = () => {
             </label>
             <input
               id="companyAddress"
+              defaultValue={address}
+              onChange={(e) => {
+                setAddress(e.target.value);
+                setValue("companyAddress", e.target.value)
+              }}
               type="text"
               {...register("companyAddress", { required: true })}
               className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
@@ -271,6 +604,11 @@ const AccountDetailsForm: React.FC = () => {
             <input
               id="city"
               type="text"
+              defaultValue={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+                setValue("city", e.target.value);
+              }}
               {...register("city", { required: true })}
               className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
             />
@@ -284,12 +622,20 @@ const AccountDetailsForm: React.FC = () => {
             <label htmlFor="country" className="block text-sm">
               Country
             </label>
-            <input
+            <select
               id="country"
-              type="text"
               {...register("country", { required: true })}
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
               className="input-field p-2 mt-2 mb-2 w-full border-2 border-[#DFEAF2] rounded-md focus:outline-none"
-            />
+            >
+              <option value="">Select a country</option>
+              {countries.map((country, index) => (
+                <option key={index} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
             {errors.country && (
               <span role="alert" className="text-red-600">
                 Country is required
@@ -303,6 +649,11 @@ const AccountDetailsForm: React.FC = () => {
             <input
               id="postalCode"
               type="text"
+              defaultValue={postalCode}
+              onChange={(e) => {
+                setPostalCode(e.target.value);
+                setValue("postalCode", e.target.value);
+              }}
               {...register("postalCode", {
                 required: true,
                 pattern: {
@@ -325,6 +676,11 @@ const AccountDetailsForm: React.FC = () => {
             <textarea
               id="aboutCompany"
               {...register("aboutCompany", { required: true })}
+              defaultValue={aboutCompany}
+              onChange={(e) => {
+                setAboutCompany(e.target.value),
+                setValue("aboutCompany", e.target.value)
+              }}
               className="input-field p-2 mt-2 mb-2 w-full h-40 border-2 border-[#DFEAF2] rounded-md focus:outline-none"
             />
             {errors.aboutCompany && (
@@ -356,7 +712,11 @@ const AccountDetailsForm: React.FC = () => {
                 id="workDomain"
                 type="text"
                 value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
+                defaultValue={workdomain}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                  setValue("workDomain", e.target.value)
+                }}
                 onKeyDown={handleKeyDown}
                 className="input-field p-2 mt-2 w-full border-none focus:outline-none"
               />
@@ -365,6 +725,7 @@ const AccountDetailsForm: React.FC = () => {
               type="hidden"
               {...register("workDomain", { required: true })}
               value={workDomains.join(",")}
+              defaultValue={workDomains} 
             />
             {errors.workDomain && (
               <span role="alert" className="text-red-600">

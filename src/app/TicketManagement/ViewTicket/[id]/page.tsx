@@ -34,11 +34,13 @@ const Page: React.FC = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
+  const [projectName, setProjectName] = useState("")
+
   const [files, setFiles] = useState([]);
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const router = useRouter();
+  // const router = useRouter();
   const pathname = usePathname();
   const parts = pathname.split("/");
   const value = parts[parts.length - 1];
@@ -76,6 +78,7 @@ const Page: React.FC = () => {
         setRaisedBy(user.customer_name);
         setSubject(ticketDetails.subject);
         setDescription(ticketDetails.details);
+        setProjectName(ticketDetails.company_legal_name)
 
         const filesData = response.data.ticketDetails[0].details_images_url.map(
           (url: string, index: number) => ({
@@ -186,7 +189,28 @@ const Page: React.FC = () => {
               Edit
             </Button>
           </div>
+          <div className="text-xl">
+            {value}
+          </div>
+          <div className="text-xl">
+            {value}
+          </div>
         </div>
+
+        <div className="flex gap-4 justify-center items-center">
+          <div>
+            <Image src={Bell} alt="Notification Bell" width={25} />
+          </div>
+          <div>
+            <Image src={userBg} alt="User" width={50} />
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-[#F9F9F9] p-10 m-10 rounded-md">
+        
+
+        <div className="grid grid-cols-3 py-5">
         <div className="grid grid-cols-2 lg:grid-cols-3 py-5">
           <div className="pb-5">
             <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">Ticket ID</div>
@@ -229,7 +253,7 @@ const Page: React.FC = () => {
 
           <div className="pb-5">
             <div className="text-sm lg:text-base lg:font-medium font-medium text-[#9A9A9A]">
-              Total Hours Logged on Tickets
+              Hours Logged
             </div>
             <div>
               <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{totalHours}</p>
@@ -249,6 +273,14 @@ const Page: React.FC = () => {
               <p className="text-sm lg:text-base py-5 text-[#7D7D7D]">{assignedTo}</p>
             </div>
           </div>
+
+          <div className="">
+            <div className="text-base font-medium">Project Name</div>
+            <div>
+              <p className="text-base py-5 text-[#7D7D7D]">{projectName}</p>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -417,10 +449,10 @@ const Page: React.FC = () => {
                   className="flex items-center gap-2 cursor-pointer"
                   onClick={handleAddAttachment}
                 >
-                  <div>
+                  {/* <div>
                     <Image src={addticket} alt="Add new" width={20} />
                   </div>
-                  <div className="text-[#5027D9] text-lg">Add new</div>
+                  <div className="text-[#5027D9] text-lg">Add new</div> */}
                 </div>
               </div>
               <table className="min-w-full divide-y divide-gray-200">
@@ -470,6 +502,7 @@ const Page: React.FC = () => {
           </TabPanels>
         </TabGroup>
       </div>
+    </div>
     </div>
   );
 };
