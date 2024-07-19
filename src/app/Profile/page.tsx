@@ -46,7 +46,7 @@ export default function Profile() {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center shadow-md px-8 py-4 sticky top-0 z-50 bg-white">
+      {/* <div className="flex justify-between items-center shadow-md px-8 py-4 sticky top-0 z-50 bg-white">
         <div className="text-[#2A2C3E] text-xl">Profile</div>
         <div className="flex gap-4 justify-center items-center">
           <div>
@@ -62,7 +62,7 @@ export default function Profile() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Tabs starts */}
 

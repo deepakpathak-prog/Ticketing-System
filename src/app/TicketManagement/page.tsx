@@ -162,7 +162,7 @@ function TicketManagementPage() {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center shadow-md px-8 py-4 sticky top-0 z-50 bg-white">
+      {/* <div className="flex justify-between items-center shadow-md px-8 py-4 sticky top-0 z-50 bg-white">
         <div className="text-[#2A2C3E] text-xl">Ticket Management</div>
         <div className="flex gap-4 justify-center items-center">
           <div>
@@ -180,7 +180,7 @@ function TicketManagementPage() {
             )}
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="lg:flex justify-between items-center mt-5 lg:mt-10 lg:mx-8 mx-5">
         <div>
